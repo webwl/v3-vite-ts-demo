@@ -1,17 +1,12 @@
 <template>
     <el-card class="container">
-        <div class="btns">
-            <el-button type="primary" @click="addFn">新增借阅</el-button>
-        </div>
         <el-table class="table" :data="tableData" style="width: 100%">
             <el-table-column type="index" width="50" />
             <el-table-column prop="userName" label="姓名" />
             <el-table-column prop="schoolId" label="学号" />
-            <el-table-column prop="bookId" label="图书编号" />
-            <el-table-column prop="bookName" label="图书名称" />
-            <el-table-column prop="author" label="作者" />
-            <el-table-column prop="createTime" label="借阅时间" />
-            <el-table-column prop="status" label="借阅状态" />
+            <el-table-column prop="className" label="班级" />
+            <el-table-column prop="email" label="邮箱" />
+            <el-table-column prop="action" label="操作" />
         </el-table>
         <el-pagination
             class="pagination"
@@ -22,10 +17,8 @@
         >
         </el-pagination>
     </el-card>
-    <AddComponent ref="tableComponentRef"></AddComponent>
 </template>
 <script lang="ts" setup>
-import AddComponent from './borrow-add.vue'
 import { ref } from 'vue'
 const props = defineProps({
     searchFormData: {
@@ -34,10 +27,6 @@ const props = defineProps({
     },
 })
 const tableData = ref([])
-const tableComponentRef = ref(null)
-const addFn = () => {
-    tableComponentRef.value?.show()
-}
 const search = () => {
     console.log('search:', props.searchFormData)
 }
