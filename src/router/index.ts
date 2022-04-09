@@ -6,47 +6,47 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            redirect: '/book-msg-mg',
+            redirect: '/home-page',
         },
         {
-            path: '/book-msg-mg',
-            name: 'bookMsgMg',
+            path: '/home-page',
+            name: 'homePage',
             meta: {
-                title: '图书信息管理',
+                title: '首页',
             },
-            component: () => import('@/pages/bookMsgMg/index.vue'),
+            component: () => import('@/pages/homePage/indexPage.vue'),
         },
         {
-            path: '/book-type-mg',
-            name: 'bookTypeMg',
+            path: '/online-library',
+            name: 'onlineLibrary',
             meta: {
-                title: '图书类别管理',
+                title: '图书库',
             },
-            component: () => import('@/pages/bookTypeMg/index.vue'),
+            component: () => import('@/pages/onlineLibrary/indexPage.vue'),
         },
         {
-            path: '/borrow-msg-mg',
-            name: 'borrowMsgMg',
+            path: '/popular-books',
+            name: 'popularBooks',
             meta: {
-                title: '借阅信息管理',
+                title: '热读榜',
             },
-            component: () => import('@/pages/borrowMsgMg/index.vue'),
+            component: () => import('@/pages/popularBooks/indexPage.vue'),
         },
         {
-            path: '/user-msg-mg',
-            name: 'userMsgMg',
+            path: '/message-board',
+            name: 'messageBoard',
             meta: {
-                title: '用户信息管理',
+                title: '留言板',
             },
-            component: () => import('@/pages/userMsgMg/index.vue'),
+            component: () => import('@/pages/messageBoard/indexPage.vue'),
         },
         {
-            path: '/leave-msg-mg',
-            name: 'leaveMsgMg',
+            path: '/personal-center',
+            name: 'personalCenter',
             meta: {
-                title: '留言管理',
+                title: '个人中心',
             },
-            component: () => import('@/pages/msgMg/index.vue'),
+            component: () => import('@/pages/personalCenter/indexPage.vue'),
         },
     ],
 })

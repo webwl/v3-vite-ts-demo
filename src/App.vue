@@ -1,6 +1,5 @@
 <template>
-    <Login v-if="type" @login="login"></Login>
-    <DefaultLayout v-else></DefaultLayout>
+    <DefaultLayout></DefaultLayout>
 </template>
 
 <script lang="ts" setup>

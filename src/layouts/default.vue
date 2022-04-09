@@ -1,13 +1,29 @@
 <template>
     <div class="header">
-        <div class="logo-box">
+        <div class="logo-block">
             <div class="img">
                 <img class="logo" src="./assets/logo.png" />
             </div>
             <div class="title">图书管理系统</div>
         </div>
-        <div class="user-box">
-            <el-dropdown class="user-dropdown">
+        <div class="menu-block">
+            <el-menu
+                :default-active="activeName"
+                class="el-menu-demo"
+                mode="horizontal"
+                background-color="#283857"
+                text-color="#fff"
+                @select="handleSelect"
+            >
+                <el-menu-item index="homePage">首页</el-menu-item>
+                <el-menu-item index="onlineLibrary">图书库</el-menu-item>
+                <el-menu-item index="popularBooks">热读榜</el-menu-item>
+                <el-menu-item index="messageBoard">留言板</el-menu-item>
+            </el-menu>
+        </div>
+        <div class="user-block">
+            <el-button class="login-btn" v-if="true" type="text" @click="login">点击登录</el-button>
+            <el-dropdown v-else class="user-dropdown">
                 <span class="el-dropdown-link user-name">
                     污蝌蚪
                     <el-icon class="el-icon--right user-icon">
@@ -16,70 +32,48 @@
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>退出系统</el-dropdown-item>
+                        <el-dropdown-item>个人空间</el-dropdown-item>
+                        <el-dropdown-item>退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
         </div>
     </div>
     <div class="content">
-        <div class="menu">
-            <el-menu default-active="1" class="el-menu-vertical-demo" @select="handleSelect">
-                <el-menu-item index="1">
-                    <el-icon><collection /></el-icon>
-                    <span>图书信息管理</span>
-                </el-menu-item>
-                <el-menu-item index="2">
-                    <el-icon><discount /></el-icon>
-                    <span>图书类别管理</span>
-                </el-menu-item>
-                <el-menu-item index="3">
-                    <el-icon><shopping-cart-full /></el-icon>
-                    <span>借阅信息管理</span>
-                </el-menu-item>
-                <el-menu-item index="4">
-                    <el-icon><user /></el-icon>
-                    <span>用户信息管理</span>
-                </el-menu-item>
-                <el-menu-item index="5">
-                    <el-icon><notebook /></el-icon>
-                    <span>留言管理</span>
-                </el-menu-item>
-            </el-menu>
-        </div>
-        <div class="info">
-            <router-view></router-view>
-        </div>
+        <router-view></router-view>
     </div>
+    <LoginDialog ref="loginRef"></LoginDialog>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import {
-    Menu as IconMenu,
-    Collection,
-    ArrowDown,
-    Discount,
-    ShoppingCartFull,
-    User,
-    Notebook,
-} from '@element-plus/icons-vue'
-interface IRouterMap {
+import { Menu as IconMenu, ArrowDown } from '@element-plus/icons-vue'
+import LoginDialog from '@/components/login/indexPage.vue'
+const $router = useRouter()
+const $route = useRoute()
+
+interface IPath {
     [key: string]: string
 }
-const $router = useRouter()
+const menuMap: IPath = {
+    '/': 'homePage',
+    '/home-page': 'homePage',
+    '/online-library': 'onlineLibrary',
+    '/popular-books': 'popularBooks',
+    '/message-board': 'messageBoard',
+}
+const activeName = ref('')
+onMounted(() => {
+    activeName.value = menuMap[location.pathname]
+})
 const handleSelect = (key: string, keyPath: string[]) => {
-    const routerMap: IRouterMap = {
-        '1': 'bookMsgMg',
-        '2': 'bookTypeMg',
-        '3': 'borrowMsgMg',
-        '4': 'userMsgMg',
-        '5': 'leaveMsgMg',
-    }
-    $router.push({
-        name: routerMap[key],
-    })
+    console.log(key, keyPath)
+    $router.push({ name: key })
+}
+const loginRef = ref(null)
+const login = () => {
+    loginRef.value?.show()
 }
 </script>
 
@@ -89,8 +83,8 @@ const handleSelect = (key: string, keyPath: string[]) => {
 .header {
     height: @header-height;
     background-color: rgb(40, 56, 87);
-    box-shadow: 0 2px 10px #cdcdcd;
-    .logo-box {
+    block-shadow: 0 2px 10px #cdcdcd;
+    .logo-block {
         float: left;
         width: 240px;
         height: 50px;
@@ -116,8 +110,25 @@ const handleSelect = (key: string, keyPath: string[]) => {
             color: #fff;
         }
     }
-    .user-box {
-        height: 50px;
+    .menu-block {
+        width: 70vw;
+        height: @header-height;
+        line-height: @header-height;
+        float: left;
+        .el-button--text {
+            color: #fff;
+        }
+        .el-menu-demo {
+            margin-left: 20vw;
+        }
+        .el-menu-item {
+            max-height: 50px;
+        }
+    }
+    .user-block {
+        height: @header-height;
+        line-height: @header-height;
+        text-align: right;
         width: 200px;
         float: right;
         .user-dropdown {
@@ -128,26 +139,10 @@ const handleSelect = (key: string, keyPath: string[]) => {
             color: #fff;
             text-align: center;
         }
-    }
-}
-.content {
-    height: calc(100vh - @header-height);
-    .menu {
-        border-right: 1px solid #cdcdcd;
-        float: left;
-        height: calc(100vh - @header-height);
-        width: @menu-width;
-        .el-menu-vertical-demo {
-            border: 0;
+        .login-btn {
+            color: #fff;
+            margin-right: 20px;
         }
-    }
-    .info {
-        overflow: hidden;
-        height: calc(100vh - @header-height - 20px);
-        width: calc(100vw - @menu-width - 21px);
-        background-color: #f2f2f2;
-        padding: 10px;
-        float: right;
     }
 }
 </style>
