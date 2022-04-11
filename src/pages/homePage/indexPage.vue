@@ -45,20 +45,22 @@
         </div>
         <div class="block-title">联系我们</div>
         <div class="contact">
-            <ul>
-                <li>
-                    <el-icon class="contact-icon" size="20"><Location /></el-icon>
-                    <span class="contact-text">四川省攀枝花市机场路东区10号</span>
-                </li>
-                <li>
-                    <el-icon class="contact-icon" :size="20"><phone-filled /></el-icon>
-                    <span class="contact-text">0812-3371118</span>
-                </li>
-                <li>
-                    <el-icon class="contact-icon" :size="20"><Message /></el-icon>
-                    <span class="contact-text">6170000</span>
-                </li>
-            </ul>
+            <div class="lucency-bg">
+                <ul>
+                    <li>
+                        <el-icon class="contact-icon" size="20"><Location /></el-icon>
+                        <span class="contact-text">四川省攀枝花市机场路东区10号</span>
+                    </li>
+                    <li>
+                        <el-icon class="contact-icon" :size="20"><phone-filled /></el-icon>
+                        <span class="contact-text">0812-3371118</span>
+                    </li>
+                    <li>
+                        <el-icon class="contact-icon" :size="20"><Message /></el-icon>
+                        <span class="contact-text">6170000</span>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="block-title"></div>
     </div>
@@ -70,13 +72,19 @@ import { Message, Location, PhoneFilled } from '@element-plus/icons-vue'
 <style lang="less" scoped>
 .contact {
     height: 300px;
-    background-color: red;
     overflow: hidden;
     background: url('@/assets/images/map.png') no-repeat;
     background-position: 10% 50%;
+    .lucency-bg {
+        height: 300px;
+        background-color: #000;
+        opacity: 0.4;
+        overflow: hidden;
+    }
     ul {
         margin-top: 90px;
         margin-left: 50px;
+        color: #fff;
         li {
             height: 20px;
             line-height: 20px;
@@ -104,11 +112,11 @@ import { Message, Location, PhoneFilled } from '@element-plus/icons-vue'
                 padding: 5px;
             }
             .td-block {
-                background-color: #cdcdcd;
+                background-color: #f3f4f8;
                 height: 200px;
             }
             .td-block-double {
-                background-color: #cdcdcd;
+                background-color: #f3f4f8;
                 height: 414px;
             }
         }
