@@ -119,7 +119,7 @@ const login = () => {
             color: #fff;
         }
         .el-menu-demo {
-            margin-left: 20vw;
+            margin-left: 100px;
         }
         .el-menu-item {
             max-height: 50px;
