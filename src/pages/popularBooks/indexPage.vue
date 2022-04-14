@@ -7,27 +7,33 @@
             Mast<span class="placeholder"></span>Read<span class="placeholder"></span>Articles
         </p>
     </div>
-    <div class="content">
-        <el-carousel :interval="4000" type="card" height="350px">
-            <el-carousel-item v-for="item in 6" :key="item">
-                <h3>{{ item }}</h3>
-            </el-carousel-item>
-        </el-carousel>
-        <el-row class="lists" :gutter="20">
-            <el-col v-for="item in lists" :key="item.type" :span="8">
-                <div class="list">
-                    <div class="list-title">{{ item.type }}</div>
-                    <div class="list-content">
-                        <ul>
-                            <li v-for="listItem in item.list" :key="listItem.id" class="list-item">
-                                <div class="name">{{ listItem.book }}</div>
-                                <div class="author">{{ listItem.author }}</div>
-                            </li>
-                        </ul>
+    <div class="content-bg">
+        <div class="content">
+            <el-carousel :interval="4000" type="card" height="350px">
+                <el-carousel-item v-for="item in 6" :key="item">
+                    <h3>{{ item }}</h3>
+                </el-carousel-item>
+            </el-carousel>
+            <el-row class="lists" :gutter="20">
+                <el-col v-for="item in lists" :key="item.type" :span="8">
+                    <div class="list">
+                        <div class="list-title">{{ item.type }}</div>
+                        <div class="list-content">
+                            <ul>
+                                <li
+                                    v-for="listItem in item.list"
+                                    :key="listItem.id"
+                                    class="list-item"
+                                >
+                                    <div class="name">{{ listItem.book }}</div>
+                                    <div class="author">{{ listItem.author }}</div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </el-col>
-        </el-row>
+                </el-col>
+            </el-row>
+        </div>
     </div>
 </template>
 <script lang="ts" setup>
@@ -71,10 +77,17 @@ const lists = reactive([
         color: #87888a;
     }
 }
-.content {
-    width: 70vw;
-    margin: 20px auto;
+.content-bg {
+    background-color: #fff;
+    .content {
+        width: 70vw;
+        margin: 20px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px 0;
+    }
 }
+
 .lists {
     margin-top: 40px;
     .list {

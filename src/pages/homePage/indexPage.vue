@@ -112,12 +112,14 @@ import { Message, Location, PhoneFilled } from '@element-plus/icons-vue'
                 padding: 5px;
             }
             .td-block {
-                background-color: #f3f4f8;
+                background-color: #fff;
                 height: 200px;
+                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
             }
             .td-block-double {
-                background-color: #f3f4f8;
+                background-color: #fff;
                 height: 414px;
+                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
             }
         }
     }

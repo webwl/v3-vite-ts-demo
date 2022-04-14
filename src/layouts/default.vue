@@ -83,7 +83,7 @@ const login = () => {
 .header {
     height: @header-height;
     background-color: rgb(40, 56, 87);
-    block-shadow: 0 2px 10px #cdcdcd;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
     .logo-block {
         float: left;
         width: 240px;
@@ -144,5 +144,10 @@ const login = () => {
             margin-right: 20px;
         }
     }
+}
+.content {
+    background-color: #f4f5f5;
+    height: calc(100vh - @header-height);
+    overflow-y: auto;
 }
 </style>

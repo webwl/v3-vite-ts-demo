@@ -52,6 +52,96 @@
                     羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
                     羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
                 </p>
+                <div class="inventory">
+                    <div class="inventory-item">借出（本）：1</div>
+                    <div class="inventory-item">在馆（本）：8</div>
+                    <div class="inventory-item">总馆藏量：9</div>
+                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
+                </div>
+            </div>
+        </div>
+        <div class="book">
+            <div class="book-img">
+                <img class="book-img-src" src="###" />
+            </div>
+            <div class="book-info">
+                <p class="book-title">《沉默的羔羊》</p>
+                <p class="author">
+                    <span class="author-row">作者：托马斯·哈里斯</span>
+                    <span class="author-row">页数：369</span>
+                    <span class="author-row">出版社：南京</span>
+                    <span class="author-row">出版日期：2013-01</span>
+                </p>
+                <p class="series">丛书名称：沉默的羔羊系列</p>
+                <p class="intro" title="sadfasdf">
+                    简介：沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                </p>
+                <div class="inventory">
+                    <div class="inventory-item">借出（本）：1</div>
+                    <div class="inventory-item">在馆（本）：8</div>
+                    <div class="inventory-item">总馆藏量：9</div>
+                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
+                </div>
+            </div>
+        </div>
+        <div class="book">
+            <div class="book-img">
+                <img class="book-img-src" src="###" />
+            </div>
+            <div class="book-info">
+                <p class="book-title">《沉默的羔羊》</p>
+                <p class="author">
+                    <span class="author-row">作者：托马斯·哈里斯</span>
+                    <span class="author-row">页数：369</span>
+                    <span class="author-row">出版社：南京</span>
+                    <span class="author-row">出版日期：2013-01</span>
+                </p>
+                <p class="series">丛书名称：沉默的羔羊系列</p>
+                <p class="intro" title="sadfasdf">
+                    简介：沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                </p>
+                <div class="inventory">
+                    <div class="inventory-item">借出（本）：1</div>
+                    <div class="inventory-item">在馆（本）：8</div>
+                    <div class="inventory-item">总馆藏量：9</div>
+                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
+                </div>
+            </div>
+        </div>
+        <div class="book">
+            <div class="book-img">
+                <img class="book-img-src" src="###" />
+            </div>
+            <div class="book-info">
+                <p class="book-title">《沉默的羔羊》</p>
+                <p class="author">
+                    <span class="author-row">作者：托马斯·哈里斯</span>
+                    <span class="author-row">页数：369</span>
+                    <span class="author-row">出版社：南京</span>
+                    <span class="author-row">出版日期：2013-01</span>
+                </p>
+                <p class="series">丛书名称：沉默的羔羊系列</p>
+                <p class="intro" title="sadfasdf">
+                    简介：沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
+                </p>
+                <div class="inventory">
+                    <div class="inventory-item">借出（本）：1</div>
+                    <div class="inventory-item">在馆（本）：8</div>
+                    <div class="inventory-item">总馆藏量：9</div>
+                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
+                </div>
             </div>
         </div>
         <el-pagination
@@ -91,14 +181,16 @@ const handleCurrentChange = (val: number) => {
 
 <style lang="less" scoped>
 .search-bg {
-    background-color: #f3f4f8;
+    background-color: #fff;
     height: 200px;
+    margin-bottom: 20px;
 }
 .search-block {
     width: 70vw;
     height: 200px;
     margin: 0 auto;
     overflow: hidden;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
     .search-form {
         margin-top: 30px;
         .keyword {
@@ -111,14 +203,17 @@ const handleCurrentChange = (val: number) => {
 }
 .content {
     width: 70vw;
-    margin: 0 auto;
+    margin: 0 auto 60px;
     padding: 20px 0;
     overflow: hidden;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
     .pagination {
         float: right;
     }
     .book {
-        height: 150px;
+        height: 170px;
         border-bottom: 1px dashed #cdcdcd;
         margin-bottom: 10px;
         .book-img {
@@ -149,12 +244,22 @@ const handleCurrentChange = (val: number) => {
                 margin: 0 0 10px 10px;
             }
             .intro {
+                color: #8a8a8a;
                 margin: 0 0 10px 10px;
                 width: 97%;
                 overflow: hidden;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 2;
+            }
+            .inventory {
+                text-align: right;
+                .inventory-item {
+                    float: right;
+                    margin-left: 20px;
+                    font-size: 14px;
+                    color: #333;
+                }
             }
         }
     }
