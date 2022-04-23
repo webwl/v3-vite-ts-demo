@@ -41,6 +41,14 @@ const router = createRouter({
             component: () => import('@/pages/messageBoard/indexPage.vue'),
         },
         {
+            path: '/wishing-well',
+            name: 'wishingWell',
+            meta: {
+                title: '许愿池',
+            },
+            component: () => import('@/pages/wishingWell/indexPage.vue'),
+        },
+        {
             path: '/personal-center',
             name: 'personalCenter',
             meta: {

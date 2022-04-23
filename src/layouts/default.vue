@@ -19,6 +19,7 @@
                 <el-menu-item index="onlineLibrary">图书库</el-menu-item>
                 <el-menu-item index="popularBooks">热读榜</el-menu-item>
                 <el-menu-item index="messageBoard">留言板</el-menu-item>
+                <el-menu-item index="wishingWell">许愿池</el-menu-item>
             </el-menu>
         </div>
         <div class="user-block">
@@ -62,13 +63,13 @@ const menuMap: IPath = {
     '/online-library': 'onlineLibrary',
     '/popular-books': 'popularBooks',
     '/message-board': 'messageBoard',
+    '/wishing-well': 'wishingWell',
 }
 const activeName = ref('')
 onMounted(() => {
     activeName.value = menuMap[location.pathname]
 })
 const handleSelect = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
     $router.push({ name: key })
 }
 const loginRef = ref(null)
