@@ -67,6 +67,7 @@ const lists = reactive([
         font-size: 24px;
         font-weight: bold;
         color: #20283b;
+        margin: 30px 0;
     }
     .placeholder {
         margin-right: 30px;

@@ -197,6 +197,7 @@ const showAddDialog = () => {
         .list-msg-operate {
             height: 25px;
             .endorse {
+                margin-left: 20px;
                 .icon {
                     float: left;
                     margin-top: 2px;

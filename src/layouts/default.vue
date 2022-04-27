@@ -23,7 +23,9 @@
             </el-menu>
         </div>
         <div class="user-block">
-            <el-button class="login-btn" v-if="true" type="text" @click="login">点击登录</el-button>
+            <el-button class="login-btn" v-if="false" type="text" @click="login"
+                >点击登录</el-button
+            >
             <el-dropdown v-else class="user-dropdown">
                 <span class="el-dropdown-link user-name">
                     污蝌蚪
@@ -33,7 +35,9 @@
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>个人空间</el-dropdown-item>
+                        <el-dropdown-item @click="toPage('personalSpace')"
+                            >个人空间</el-dropdown-item
+                        >
                         <el-dropdown-item>退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
@@ -75,6 +79,11 @@ const handleSelect = (key: string, keyPath: string[]) => {
 const loginRef = ref(null)
 const login = () => {
     loginRef.value?.show()
+}
+
+const toPage = (pathName: string) => {
+    activeName.value = pathName
+    $router.push({ name: pathName })
 }
 </script>
 

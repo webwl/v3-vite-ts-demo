@@ -49,12 +49,12 @@ const router = createRouter({
             component: () => import('@/pages/wishingWell/indexPage.vue'),
         },
         {
-            path: '/personal-center',
-            name: 'personalCenter',
+            path: '/personal-space',
+            name: 'personalSpace',
             meta: {
                 title: '个人中心',
             },
-            component: () => import('@/pages/personalCenter/indexPage.vue'),
+            component: () => import('@/pages/personalSpace/indexPage.vue'),
         },
     ],
 })
