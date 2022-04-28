@@ -23,9 +23,7 @@
             </el-menu>
         </div>
         <div class="user-block">
-            <el-button class="login-btn" v-if="false" type="text" @click="login"
-                >点击登录</el-button
-            >
+            <el-button class="login-btn" v-if="true" type="text" @click="login">点击登录</el-button>
             <el-dropdown v-else class="user-dropdown">
                 <span class="el-dropdown-link user-name">
                     污蝌蚪
@@ -55,6 +53,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Menu as IconMenu, ArrowDown } from '@element-plus/icons-vue'
 import LoginDialog from '@/components/login/indexPage.vue'
+
 const $router = useRouter()
 const $route = useRoute()
 

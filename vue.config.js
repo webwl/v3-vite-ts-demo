@@ -1,5 +1,21 @@
 const path = require('path')
+const resolve = (dir) => require('path').join(__dirname, dir)
+
 module.exports = {
+    // devServer: {
+    //     port: '3000',
+    //     https: false,
+    //     proxy: {
+    //         '/api': {
+    //             target: 'http://124.220.34.251:5250',
+    //             changeOrigin: true,
+    //             secure: false,
+    //             pathRewrite: {
+    //                 '^/api': '',
+    //             },
+    //         },
+    //     },
+    // },
     transpileDependencies: ['vuetify'],
     pluginOptions: {
         'style-resources-loader': {
@@ -20,6 +36,11 @@ module.exports = {
                     javascriptEnabled: true,
                 },
             },
+        },
+    },
+    resolve: {
+        alias: {
+            '@': resolve('src'),
         },
     },
 }

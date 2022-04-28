@@ -26,6 +26,8 @@
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import type { FormInstance } from 'element-plus'
+import { login } from '../../api/index'
+
 const ruleForm = reactive({
     name: '',
     password: '',
@@ -60,9 +62,18 @@ const show = () => {
 const close = () => {}
 const submit = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    await formEl.validate((valid: Boolean) => {
+    await formEl.validate(async (valid: Boolean) => {
         if (valid) {
-            ElMessage.success('校验通过！')
+            try {
+                const res = await login.$apiLogin({
+                    nickName: '11',
+                    password: '222',
+                })
+                console.log(res)
+            } catch (error) {
+                console.log('登录失败')
+                console.error(error)
+            }
         }
     })
 }
