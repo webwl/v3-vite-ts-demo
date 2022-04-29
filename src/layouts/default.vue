@@ -23,10 +23,12 @@
             </el-menu>
         </div>
         <div class="user-block">
-            <el-button class="login-btn" v-if="true" type="text" @click="login">点击登录</el-button>
+            <el-button v-if="!token" class="login-btn" type="text" @click="login"
+                >点击登录</el-button
+            >
             <el-dropdown v-else class="user-dropdown">
                 <span class="el-dropdown-link user-name">
-                    污蝌蚪
+                    {{ username }}
                     <el-icon class="el-icon--right user-icon">
                         <arrow-down />
                     </el-icon>
@@ -36,7 +38,7 @@
                         <el-dropdown-item @click="toPage('personalSpace')"
                             >个人空间</el-dropdown-item
                         >
-                        <el-dropdown-item>退出登录</el-dropdown-item>
+                        <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -45,15 +47,24 @@
     <div class="content">
         <router-view></router-view>
     </div>
-    <LoginDialog ref="loginRef"></LoginDialog>
+    <LoginDialog ref="loginRef" @get-user-msg="getUserMsg" @set-token="setToken"></LoginDialog>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, reactive, toRaw, onMounted, computed, provide } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { Menu as IconMenu, ArrowDown } from '@element-plus/icons-vue'
 import LoginDialog from '@/components/login/indexPage.vue'
+import { $apiUserMsg } from '@/api/index'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
+provide('baseUrl', 'http://124.220.34.251:5250')
+
+const token = ref('')
+const localToken = localStorage.getItem('library_jwt_token')
+if (localToken) {
+    token.value = localToken
+}
 const $router = useRouter()
 const $route = useRoute()
 
@@ -69,9 +80,20 @@ const menuMap: IPath = {
     '/wishing-well': 'wishingWell',
 }
 const activeName = ref('')
-onMounted(() => {
+const username = ref('')
+onMounted(async () => {
     activeName.value = menuMap[location.pathname]
+    if (token.value) {
+        getUserMsg()
+    }
 })
+const getUserMsg = async () => {
+    const res = await $apiUserMsg()
+    username.value = res.username
+}
+const setToken = (val: string) => {
+    token.value = val
+}
 const handleSelect = (key: string, keyPath: string[]) => {
     $router.push({ name: key })
 }
@@ -79,7 +101,31 @@ const loginRef = ref(null)
 const login = () => {
     loginRef.value?.show()
 }
-
+const logOut = () => {
+    ElMessageBox.confirm('确认要退出登录吗？', '提示', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+    })
+        .then(() => {
+            localStorage.removeItem('library_jwt_token')
+            token.value = ''
+            username.value = ''
+            if (toRaw($route).name?.value === 'personalSpace') {
+                toPage('homePage')
+            }
+            ElMessage({
+                type: 'success',
+                message: '退出登录成功',
+            })
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '取消操作',
+            })
+        })
+}
 const toPage = (pathName: string) => {
     activeName.value = pathName
     $router.push({ name: pathName })

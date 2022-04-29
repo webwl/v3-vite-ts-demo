@@ -10,35 +10,95 @@
             <table class="recommend-table">
                 <tr>
                     <td rowspan="2" colspan="2">
-                        <div class="td-block-double">111</div>
+                        <div class="td-block-double">
+                            <div class="info-block">
+                                <p class="name">{{ highlyRrecommended[0]?.name }}</p>
+                                <p class="author">{{ highlyRrecommended[0]?.author }}</p>
+                                <p class="intro">{{ highlyRrecommended[0]?.intro }}</p>
+                            </div>
+                            <div class="img-block">
+                                <img class="img" :src="baseUrl + highlyRrecommended[0]?.cover" />
+                            </div>
+                        </div>
                     </td>
                     <td>
-                        <div class="td-block">111</div>
+                        <div class="td-block">
+                            <img
+                                class="img"
+                                :src="baseUrl + generalRrecommended[0]?.cover"
+                                :alt="generalRrecommended[0]?.name || '推荐图书'"
+                            />
+                        </div>
                     </td>
                     <td>
-                        <div class="td-block">111</div>
+                        <div class="td-block">
+                            <img
+                                class="img"
+                                :src="baseUrl + generalRrecommended[1]?.cover"
+                                :alt="generalRrecommended[1]?.name || '推荐图书'"
+                            />
+                        </div>
                     </td>
                     <td>
-                        <div class="td-block">111</div>
+                        <div class="td-block">
+                            <img
+                                class="img"
+                                :src="baseUrl + generalRrecommended[2]?.cover"
+                                :alt="generalRrecommended[2]?.name || '推荐图书'"
+                            />
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td rowspan="2" colspan="2">
-                        <div class="td-block-double">111</div>
+                        <div class="td-block-double">
+                            <div class="info-block">
+                                <p class="name">{{ highlyRrecommended[1]?.name }}</p>
+                                <p class="author">{{ highlyRrecommended[1]?.author }}</p>
+                                <p class="intro">{{ highlyRrecommended[1]?.intro }}</p>
+                            </div>
+                            <div class="img-block">
+                                <img class="img" :src="baseUrl + highlyRrecommended[1]?.cover" />
+                            </div>
+                        </div>
                     </td>
                     <td>
-                        <div class="td-block">111</div>
+                        <div class="td-block">
+                            <img
+                                class="img"
+                                :src="baseUrl + generalRrecommended[3]?.cover"
+                                :alt="generalRrecommended[3]?.name"
+                            />
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="td-block">111</div>
+                        <div class="td-block">
+                            <img
+                                class="img"
+                                :src="baseUrl + generalRrecommended[4]?.cover"
+                                :alt="generalRrecommended[4]?.name || '推荐图书'"
+                            />
+                        </div>
                     </td>
                     <td>
-                        <div class="td-block">111</div>
+                        <div class="td-block">
+                            <img
+                                class="img"
+                                :src="baseUrl + generalRrecommended[5]?.cover"
+                                :alt="generalRrecommended[5]?.name || '推荐图书'"
+                            />
+                        </div>
                     </td>
                     <td>
-                        <div class="td-block">111</div>
+                        <div class="td-block">
+                            <img
+                                class="img"
+                                :src="baseUrl + generalRrecommended[6]?.cover"
+                                :alt="generalRrecommended[6]?.name || '推荐图书'"
+                            />
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -67,6 +127,35 @@
 </template>
 <script lang="ts" setup>
 import { Message, Location, PhoneFilled } from '@element-plus/icons-vue'
+import { onMounted, reactive, ref, toRefs, inject } from 'vue'
+import { $apiBookRecommend } from '@/api/index'
+
+onMounted(() => {
+    getRecommend()
+})
+
+const baseUrl = inject('baseUrl')
+// 重点推荐位
+const highlyRrecommended: any[] = reactive([])
+// 普通推荐位
+const generalRrecommended: any[] = reactive([])
+const getRecommend = async () => {
+    try {
+        const res = await $apiBookRecommend()
+        if (res && Array.isArray(res)) {
+            for (let i = 0; i < res.length; i++) {
+                if (i < 2) {
+                    highlyRrecommended.push(res[i])
+                } else {
+                    generalRrecommended.push(res[i])
+                }
+            }
+        }
+    } catch (error) {
+        console.log('获取推荐书籍失败')
+        console.error(error)
+    }
+}
 </script>
 
 <style lang="less" scoped>
@@ -110,16 +199,65 @@ import { Message, Location, PhoneFilled } from '@element-plus/icons-vue'
             width: 100%;
             td {
                 padding: 5px;
+                width: 20vh;
+                height: 200px;
+                overflow: hidden;
             }
             .td-block {
-                background-color: #fff;
                 height: 200px;
+                background-color: #fff;
                 box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+                .img {
+                    width: 70%;
+                    height: 80%;
+                    float: left;
+                    margin-left: 15%;
+                    margin-top: 10%;
+                    cursor: pointer;
+                }
             }
             .td-block-double {
-                background-color: #fff;
                 height: 414px;
+                background-color: #fff;
                 box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+                overflow: hidden;
+                .info-block {
+                    float: left;
+                    width: 50%;
+                    height: 100%;
+                    .name {
+                        font-size: 20px;
+                        color: #333;
+                        margin: 80px 0 10px 30px;
+                    }
+                    .author {
+                        font-size: 14px;
+                        color: #333;
+                        margin: 10px 0 10px 40px;
+                    }
+                    .intro {
+                        font-size: 16px;
+                        color: rgb(128, 128, 128);
+                        margin: 10px 0 10px 40px;
+                        width: 80%;
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 10;
+                    }
+                }
+                .img-block {
+                    float: left;
+                    width: 50%;
+                    height: 100%;
+                    .img {
+                        width: 85%;
+                        height: 50%;
+                        float: left;
+                        margin-top: 35%;
+                        cursor: pointer;
+                    }
+                }
             }
         }
     }

@@ -7,13 +7,17 @@
             label-width="80px"
             class="demo-ruleForm"
         >
-            <el-form-item label="学号" prop="name" placeholder="请输入学号" clearable>
-                <el-input v-model="ruleForm.name" />
+            <el-form-item label="学号" prop="username" placeholder="请输入学号" clearable>
+                <el-input v-model="ruleForm.username" />
             </el-form-item>
             <el-form-item label="密码" prop="password" placeholder="请输入密码" clearable>
                 <el-input v-model="ruleForm.password" type="password" />
             </el-form-item>
+            <el-form-item clearable>
+                <el-checkbox v-model="ruleForm.rememberMe" label="记住密码" size="large" />
+            </el-form-item>
         </el-form>
+
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="dialogVisible = false">取消</el-button>
@@ -26,11 +30,14 @@
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import type { FormInstance } from 'element-plus'
-import { login } from '../../api/index'
+import { $apiLogin } from '../../api/index'
+
+const emit = defineEmits(['getUserMsg', 'setToken'])
 
 const ruleForm = reactive({
-    name: '',
+    username: '',
     password: '',
+    rememberMe: true,
 })
 const ruleFormRef = ref<FormInstance>()
 
@@ -45,7 +52,7 @@ const validatePassword = (rule: any, value: any, callback: any) => {
     }
 }
 const rules = reactive({
-    name: [
+    username: [
         { required: true, message: '请输入学号', trigger: 'blur' },
         { min: 4, max: 20, message: '请输入4-20位以内的学号', trigger: 'blur' },
     ],
@@ -65,11 +72,14 @@ const submit = async (formEl: FormInstance | undefined) => {
     await formEl.validate(async (valid: Boolean) => {
         if (valid) {
             try {
-                const res = await login.$apiLogin({
-                    nickName: '11',
-                    password: '222',
-                })
-                console.log(res)
+                const res = await $apiLogin(ruleForm)
+                if (res && typeof res === 'string') {
+                    localStorage.setItem('library_jwt_token', res)
+                    dialogVisible.value = false
+                    formEl.resetFields()
+                    emit('getUserMsg')
+                    emit('setToken', res)
+                }
             } catch (error) {
                 console.log('登录失败')
                 console.error(error)

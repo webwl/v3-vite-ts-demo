@@ -9,137 +9,49 @@
                         class="keyword"
                     >
                         <template #append>
-                            <div class="search-btn" @click="search">搜索</div>
+                            <div class="search-btn" @click="search('init')">搜索</div>
                         </template>
                     </el-input>
                 </el-form-item>
                 <el-form-item label="搜索类型">
-                    <el-radio-group v-model="formValue.type">
-                        <el-radio label="all">全部</el-radio>
-                        <el-radio label="book">书名</el-radio>
+                    <el-radio-group v-model="formValue.field">
+                        <el-radio label="">全部</el-radio>
+                        <el-radio label="name">书名</el-radio>
                         <el-radio label="author">作者</el-radio>
+                        <el-radio label="isbn">ISBN编号</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="书籍标签">
-                    <el-radio-group v-model="formValue.tag">
-                        <el-radio label="all">全部</el-radio>
-                        <el-radio label="book">图书</el-radio>
-                        <el-radio label="course">教程</el-radio>
-                        <el-radio label="periodicals">期刊</el-radio>
+                    <el-radio-group v-model="formValue.type">
+                        <el-radio label="">全部</el-radio>
+                        <el-radio :label="1">图书</el-radio>
+                        <el-radio :label="2">教程</el-radio>
+                        <el-radio :label="3">期刊</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
         </div>
     </div>
     <div class="content">
-        <div class="book">
+        <div v-for="item of bookList" :key="item.id" class="book">
             <div class="book-img">
-                <img class="book-img-src" src="###" />
+                <img class="book-img-src" :src="baseUrl + item.cover" />
             </div>
             <div class="book-info">
-                <p class="book-title">《沉默的羔羊》</p>
+                <p class="book-title">{{ item.name }}</p>
                 <p class="author">
-                    <span class="author-row">作者：托马斯·哈里斯</span>
-                    <span class="author-row">页数：369</span>
-                    <span class="author-row">出版社：南京</span>
-                    <span class="author-row">出版日期：2013-01</span>
+                    <span class="author-row">作者：{{ item.author }}</span>
+                    <span class="author-row">页数：{{ item.pages }}</span>
+                    <span class="author-row">出版社：{{ item.publish }}</span>
+                    <span class="author-row">ISBN编号：{{ item.isbn }}</span>
+                    <span class="author-row">出版日期：{{ item.publishTime }}</span>
                 </p>
-                <p class="series">丛书名称：沉默的羔羊系列</p>
-                <p class="intro" title="sadfasdf">
-                    简介：沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                </p>
+                <p class="series">丛书名称：{{ item.translate }}</p>
+                <p class="intro" :title="item.intro">简介：{{ item.intro }}</p>
                 <div class="inventory">
                     <div class="inventory-item">借出（本）：1</div>
                     <div class="inventory-item">在馆（本）：8</div>
-                    <div class="inventory-item">总馆藏量：9</div>
-                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
-                </div>
-            </div>
-        </div>
-        <div class="book">
-            <div class="book-img">
-                <img class="book-img-src" src="###" />
-            </div>
-            <div class="book-info">
-                <p class="book-title">《沉默的羔羊》</p>
-                <p class="author">
-                    <span class="author-row">作者：托马斯·哈里斯</span>
-                    <span class="author-row">页数：369</span>
-                    <span class="author-row">出版社：南京</span>
-                    <span class="author-row">出版日期：2013-01</span>
-                </p>
-                <p class="series">丛书名称：沉默的羔羊系列</p>
-                <p class="intro" title="sadfasdf">
-                    简介：沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                </p>
-                <div class="inventory">
-                    <div class="inventory-item">借出（本）：1</div>
-                    <div class="inventory-item">在馆（本）：8</div>
-                    <div class="inventory-item">总馆藏量：9</div>
-                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
-                </div>
-            </div>
-        </div>
-        <div class="book">
-            <div class="book-img">
-                <img class="book-img-src" src="###" />
-            </div>
-            <div class="book-info">
-                <p class="book-title">《沉默的羔羊》</p>
-                <p class="author">
-                    <span class="author-row">作者：托马斯·哈里斯</span>
-                    <span class="author-row">页数：369</span>
-                    <span class="author-row">出版社：南京</span>
-                    <span class="author-row">出版日期：2013-01</span>
-                </p>
-                <p class="series">丛书名称：沉默的羔羊系列</p>
-                <p class="intro" title="sadfasdf">
-                    简介：沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                </p>
-                <div class="inventory">
-                    <div class="inventory-item">借出（本）：1</div>
-                    <div class="inventory-item">在馆（本）：8</div>
-                    <div class="inventory-item">总馆藏量：9</div>
-                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
-                </div>
-            </div>
-        </div>
-        <div class="book">
-            <div class="book-img">
-                <img class="book-img-src" src="###" />
-            </div>
-            <div class="book-info">
-                <p class="book-title">《沉默的羔羊》</p>
-                <p class="author">
-                    <span class="author-row">作者：托马斯·哈里斯</span>
-                    <span class="author-row">页数：369</span>
-                    <span class="author-row">出版社：南京</span>
-                    <span class="author-row">出版日期：2013-01</span>
-                </p>
-                <p class="series">丛书名称：沉默的羔羊系列</p>
-                <p class="intro" title="sadfasdf">
-                    简介：沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                    羊系列沉默的羔羊系列沉默的羔羊系列沉默的羔羊系列
-                </p>
-                <div class="inventory">
-                    <div class="inventory-item">借出（本）：1</div>
-                    <div class="inventory-item">在馆（本）：8</div>
-                    <div class="inventory-item">总馆藏量：9</div>
+                    <div class="inventory-item">总馆藏量：{{ item.size }}</div>
                     <div class="inventory-item">馆藏地址：xxx图书馆</div>
                 </div>
             </div>
@@ -150,32 +62,53 @@
             class="pagination"
             layout="prev, pager, next"
             :total="total"
-            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { onMounted, reactive, ref, inject } from 'vue'
+import { $apiBookSearch } from '@/api/index'
+
+const baseUrl = inject('baseUrl')
 
 const formValue = reactive({
     keyword: '',
-    type: 'all',
-    tag: 'all',
+    field: '',
+    type: '',
 })
-const search = () => {
-    console.log(111)
-}
-
 const currentPage = ref(1)
 const pageSize = ref(15)
-const total = ref(100)
+const total = ref(0)
+onMounted(() => {
+    search()
+})
 
-const handleSizeChange = (val: number) => {
-    console.log(`${val} items per page`)
+const bookList = ref()
+const search = async (init?: string) => {
+    if (init) {
+        currentPage.value = 1
+    }
+    try {
+        const res = await $apiBookSearch({
+            ...formValue,
+            page: currentPage.value,
+            size: pageSize.value,
+        })
+        if (res) {
+            total.value = res?.total
+            bookList.value = res?.list
+        }
+
+        console.log(res)
+    } catch (error) {
+        console.log('获取图书列表失败')
+        console.error(error)
+    }
 }
+
 const handleCurrentChange = (val: number) => {
-    console.log(`current page: ${val}`)
+    search()
 }
 </script>
 
@@ -216,6 +149,7 @@ const handleCurrentChange = (val: number) => {
         height: 170px;
         border-bottom: 1px dashed #cdcdcd;
         margin-bottom: 10px;
+        padding-bottom: 10px;
         .book-img {
             width: 100px;
             height: 130px;

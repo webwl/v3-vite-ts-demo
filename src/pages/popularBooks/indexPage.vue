@@ -37,7 +37,8 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { $apiBookRecommend } from '@/api/index'
 const lists = reactive([
     {
         type: '图书',
@@ -55,6 +56,16 @@ const lists = reactive([
         ],
     },
 ])
+
+onMounted(() => {})
+const search = async () => {
+    try {
+        const res = await $apiBookRecommend()
+    } catch (error) {
+        console.log('获取热读榜失败')
+        console.error(error)
+    }
+}
 </script>
 
 <style lang="less" scoped>

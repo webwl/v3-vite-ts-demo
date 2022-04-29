@@ -1,5 +1,4 @@
 const path = require('path')
-const resolve = (dir) => require('path').join(__dirname, dir)
 
 module.exports = {
     // devServer: {
@@ -36,11 +35,6 @@ module.exports = {
                     javascriptEnabled: true,
                 },
             },
-        },
-    },
-    resolve: {
-        alias: {
-            '@': resolve('src'),
         },
     },
 }
