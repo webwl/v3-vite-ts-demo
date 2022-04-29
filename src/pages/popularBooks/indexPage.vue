@@ -10,23 +10,23 @@
     <div class="content-bg">
         <div class="content">
             <el-carousel :interval="4000" type="card" height="350px">
-                <el-carousel-item v-for="item in 6" :key="item">
+                <el-carousel-item v-for="item in 4" :key="item">
                     <h3>{{ item }}</h3>
                 </el-carousel-item>
             </el-carousel>
             <el-row class="lists" :gutter="20">
                 <el-col v-for="item in lists" :key="item.type" :span="8">
                     <div class="list">
-                        <div class="list-title">{{ item.type }}</div>
+                        <div class="list-title">{{ item.name }}</div>
                         <div class="list-content">
                             <ul>
                                 <li
-                                    v-for="listItem in item.list"
-                                    :key="listItem.id"
+                                    v-for="listItem of item.list"
+                                    :key="listItem?.id"
                                     class="list-item"
                                 >
-                                    <div class="name">{{ listItem.book }}</div>
-                                    <div class="author">{{ listItem.author }}</div>
+                                    <div class="name">{{ listItem?.name }}</div>
+                                    <div class="author">{{ listItem?.author }}</div>
                                 </li>
                             </ul>
                         </div>
@@ -38,29 +38,46 @@
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
-import { $apiBookRecommend } from '@/api/index'
+import { $apiHotBookList } from '@/api/index'
 const lists = reactive([
     {
-        type: '图书',
-        list: [
-            { id: 1, book: '《书名0》', author: '作者1' },
-            { id: 2, book: '《书名0》' },
-            { id: 3, book: '《书名0》', author: '作者1' },
-            { id: 4, book: '《书名0》', author: '作者1' },
-            { id: 5, book: '《书名0》', author: '作者1' },
-            { id: 6, book: '《书名0》', author: '作者1' },
-            { id: 7, book: '《书名0》', author: '作者1' },
-            { id: 8, book: '《书名0》', author: '作者1' },
-            { id: 9, book: '《书名0》', author: '作者1' },
-            { id: 10, book: '《书名0》', author: '作者1' },
-        ],
+        type: 'BOOK',
+        name: '图书',
+        list: [],
+    },
+    {
+        type: 'TUTORIAL',
+        name: '教程',
+        list: [],
+    },
+    {
+        type: 'PERIODICAL',
+        name: '期刊',
+        list: [],
     },
 ])
 
-onMounted(() => {})
+onMounted(() => {
+    search()
+})
+
+const typeMap = {
+    BOOK: '图书',
+    TUTORIAL: '教程',
+    PERIODICAL: '期刊',
+}
 const search = async () => {
     try {
-        const res = await $apiBookRecommend()
+        const res = await $apiHotBookList()
+        if (res) {
+            const arr = []
+            for (const type in res) {
+                const currentArr = lists.find((x) => {
+                    return x.type === type
+                })
+                currentArr.list = res[type]
+            }
+        }
     } catch (error) {
         console.log('获取热读榜失败')
         console.error(error)
@@ -132,6 +149,10 @@ const search = async () => {
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     font-size: 16px;
+                    cursor: pointer;
+                    &:hover {
+                        color: #000;
+                    }
                 }
                 .author {
                     max-width: 30%;

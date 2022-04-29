@@ -1,7 +1,7 @@
 <template>
     <el-carousel class="carousel">
-        <el-carousel-item v-for="item in 4" :key="item">
-            <h3 class="small">{{ item }}</h3>
+        <el-carousel-item v-for="item of bannerList" :key="item">
+            <img class="banner" :src="'/src/assets/images/' + item + '.png'" />
         </el-carousel-item>
     </el-carousel>
     <div class="content">
@@ -130,6 +130,8 @@ import { Message, Location, PhoneFilled } from '@element-plus/icons-vue'
 import { onMounted, reactive, ref, toRefs, inject } from 'vue'
 import { $apiBookRecommend } from '@/api/index'
 
+const bannerList = ['banner1', 'banner2', 'banner3', 'banner4', 'banner5']
+
 onMounted(() => {
     getRecommend()
 })
@@ -190,6 +192,10 @@ const getRecommend = async () => {
             }
         }
     }
+}
+.banner {
+    width: 100%;
+    height: 300px;
 }
 .content {
     width: 70vw;

@@ -16,43 +16,13 @@
 
         <p class="msg-title">全部留言</p>
         <div class="list-block">
-            <div class="list">
+            <div v-for="item of messageList" :key="item.id" class="list">
                 <div class="list-head">
-                    <div class="name">丑卷</div>
-                    <div class="time">9个月前</div>
+                    <div class="name">{{ item.userName }}</div>
+                    <div class="time">{{ item.createTime }}</div>
                 </div>
                 <div class="list-info">
-                    怎么办，都是我没听过的技术，好歹我也是个入行半年的小前端，开眼界了
-                </div>
-                <div class="list-msg-operate">
-                    <div class="endorse">
-                        <svg
-                            t="1650672914813"
-                            class="icon"
-                            viewBox="0 0 1024 1024"
-                            version="1.1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            p-id="2187"
-                            width="20"
-                            height="20"
-                        >
-                            <path
-                                d="M857.28 344.992h-264.832c12.576-44.256 18.944-83.584 18.944-118.208 0-78.56-71.808-153.792-140.544-143.808-60.608 8.8-89.536 59.904-89.536 125.536v59.296c0 76.064-58.208 140.928-132.224 148.064l-117.728-0.192A67.36 67.36 0 0 0 64 483.04V872c0 37.216 30.144 67.36 67.36 67.36h652.192a102.72 102.72 0 0 0 100.928-83.584l73.728-388.96a102.72 102.72 0 0 0-100.928-121.824zM128 872V483.04c0-1.856 1.504-3.36 3.36-3.36H208v395.68H131.36A3.36 3.36 0 0 1 128 872z m767.328-417.088l-73.728 388.96a38.72 38.72 0 0 1-38.048 31.488H272V476.864a213.312 213.312 0 0 0 173.312-209.088V208.512c0-37.568 12.064-58.912 34.72-62.176 27.04-3.936 67.36 38.336 67.36 80.48 0 37.312-9.504 84-28.864 139.712a32 32 0 0 0 30.24 42.496h308.512a38.72 38.72 0 0 1 38.048 45.888z"
-                                p-id="2188"
-                                fill="#707070"
-                            ></path>
-                        </svg>
-                        <span class="num">11</span>
-                    </div>
-                </div>
-            </div>
-            <div class="lst">
-                <div class="list-head">
-                    <div class="name">丑卷</div>
-                    <div class="time">9个月前</div>
-                </div>
-                <div class="list-info">
-                    怎么办，都是我没听过的技术，好歹我也是个入行半年的小前端，开眼界了
+                    {{ item.content }}
                 </div>
             </div>
         </div>
@@ -62,41 +32,75 @@
             class="pagination"
             layout="prev, pager, next"
             :total="total"
-            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
     </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
-
+import { $apiMessageList, $apiMessageSave } from '@/api/index'
 const myMsg = ref('')
 
 const open = () => {
+    if (!myMsg.value) {
+        ElMessage({
+            type: 'warning',
+            message: '请输入留言',
+        })
+        return
+    }
     ElMessageBox.alert('确认提交留言吗？', '提示', {
         confirmButtonText: '确定',
-        callback: (action: Action) => {
+        callback: async (action: Action) => {
             if (action === 'confirm') {
-                ElMessage({
-                    type: 'success',
-                    message: '提交成功',
-                })
+                try {
+                    const res = await $apiMessageSave({
+                        title: '111',
+                        content: myMsg.value,
+                    })
+                    console.log(res)
+                    ElMessage({
+                        type: 'success',
+                        message: '保存成功',
+                    })
+                    myMsg.value = ''
+                    getList()
+                } catch (error) {
+                    console.log('提交留言失败')
+                    console.error(error)
+                }
             }
         },
     })
 }
 
 const currentPage = ref(1)
-const pageSize = ref(15)
-const total = ref(100)
-
-const handleSizeChange = (val: number) => {
-    console.log(`${val} items per page`)
-}
+const pageSize = ref(10)
+const total = ref(0)
+const messageList = ref()
 const handleCurrentChange = (val: number) => {
-    console.log(`current page: ${val}`)
+    getList()
+}
+onMounted(() => {
+    getList()
+})
+const getList = async () => {
+    try {
+        const res = await $apiMessageList({
+            page: currentPage.value,
+            size: pageSize.value,
+        })
+        if (res) {
+            total.value = res.total
+            messageList.value = res?.list
+        }
+        console.log(res)
+    } catch (error) {
+        console.log('获取留言列表失败')
+        console.error(error)
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -135,7 +139,7 @@ const handleCurrentChange = (val: number) => {
         overflow: hidden;
         .name {
             float: left;
-            width: 90%;
+            width: 80%;
             font-weight: 500;
             font-size: 15px;
             color: #252933;
@@ -144,7 +148,7 @@ const handleCurrentChange = (val: number) => {
         }
         .time {
             float: right;
-            width: 10%;
+            width: 20%;
             text-align: right;
             font-size: 14px;
             color: #8a919f;

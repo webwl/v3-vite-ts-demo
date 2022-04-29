@@ -44,7 +44,7 @@ const router = createRouter({
             path: '/wishing-well',
             name: 'wishingWell',
             meta: {
-                title: '许愿池',
+                title: '预约书籍',
             },
             component: () => import('@/pages/wishingWell/indexPage.vue'),
         },

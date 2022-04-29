@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="data">
-            <p class="name">五颗豆</p>
+            <p class="name">qwert</p>
             <p class="motto">
                 JavaScript在不断地升级迭代，越来越多的新特性让我们的代码写起来变得简洁有趣，这篇文章会介绍5个新特性，一起研究一下把。
             </p>
@@ -10,7 +10,7 @@
         </div>
         <div class="tabs">
             <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-                <el-tab-pane label="借阅书籍" name="first">
+                <el-tab-pane label="我的借阅" name="first">
                     <div class="content">
                         <div class="book">
                             <div class="book-info">
@@ -18,7 +18,7 @@
                                 <p class="author">
                                     <span class="author-row">作者：托马斯·哈里斯</span>
                                     <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN: 000001</span>
+                                    <span class="author-row">ISBN": 000001</span>
                                 </p>
                                 <p class="borrow-msg">
                                     <span class="interval">借阅时间：2022年1月1日</span>
@@ -33,7 +33,7 @@
                                 <p class="author">
                                     <span class="author-row">作者：托马斯·哈里斯</span>
                                     <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN: 000001</span>
+                                    <span class="author-row">ISBN": 000001</span>
                                 </p>
                                 <p class="borrow-msg">
                                     <span class="interval">借阅时间：2022年1月1日</span>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="许愿池" name="third">
+                <el-tab-pane label="我的预约" name="third">
                     <div class="content">
                         <div class="book">
                             <div class="book-info">
@@ -52,7 +52,7 @@
                                 <p class="author">
                                     <span class="author-row">作者：托马斯·哈里斯</span>
                                     <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN: 000001</span>
+                                    <span class="author-row">ISBN": 000001</span>
                                 </p>
                             </div>
                         </div>
@@ -62,7 +62,31 @@
                                 <p class="author">
                                     <span class="author-row">作者：托马斯·哈里斯</span>
                                     <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN: 000001</span>
+                                    <span class="author-row">ISBN": 000001</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="我的留言" name="three">
+                    <div class="content">
+                        <div class="book">
+                            <div class="book-info">
+                                <p class="book-title">《沉默的羔羊》</p>
+                                <p class="author">
+                                    <span class="author-row">作者：托马斯·哈里斯</span>
+                                    <span class="author-row">出版社：南京</span>
+                                    <span class="author-row">ISBN": 000001</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="book">
+                            <div class="book-info">
+                                <p class="book-title">《沉默的羔羊》</p>
+                                <p class="author">
+                                    <span class="author-row">作者：托马斯·哈里斯</span>
+                                    <span class="author-row">出版社：南京</span>
+                                    <span class="author-row">ISBN": 000001</span>
                                 </p>
                             </div>
                         </div>

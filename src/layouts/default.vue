@@ -2,7 +2,7 @@
     <div class="header">
         <div class="logo-block">
             <div class="img">
-                <img class="logo" src="./assets/logo.png" />
+                <img class="logo" src="../assets/images/logo.png" />
             </div>
             <div class="title">图书管理系统</div>
         </div>
@@ -19,7 +19,7 @@
                 <el-menu-item index="onlineLibrary">图书库</el-menu-item>
                 <el-menu-item index="popularBooks">热读榜</el-menu-item>
                 <el-menu-item index="messageBoard">留言板</el-menu-item>
-                <el-menu-item index="wishingWell">许愿池</el-menu-item>
+                <el-menu-item index="wishingWell">预约书籍</el-menu-item>
             </el-menu>
         </div>
         <div class="user-block">

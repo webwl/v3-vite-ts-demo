@@ -78,7 +78,7 @@ const formValue = reactive({
     type: '',
 })
 const currentPage = ref(1)
-const pageSize = ref(15)
+const pageSize = ref(10)
 const total = ref(0)
 onMounted(() => {
     search()
@@ -99,8 +99,6 @@ const search = async (init?: string) => {
             total.value = res?.total
             bookList.value = res?.list
         }
-
-        console.log(res)
     } catch (error) {
         console.log('获取图书列表失败')
         console.error(error)

@@ -13,11 +13,11 @@
             <el-form-item label="作者" prop="author" placeholder="请输入作者" clearable>
                 <el-input v-model="ruleForm.author" />
             </el-form-item>
-            <el-form-item label="出版社" prop="press" placeholder="请输入出版社" clearable>
-                <el-input v-model="ruleForm.press" />
+            <el-form-item label="出版社" prop="publish" placeholder="请输入出版社" clearable>
+                <el-input v-model="ruleForm.publish" />
             </el-form-item>
-            <el-form-item label="IBSN" prop="ibsn" placeholder="请输入IBSN" clearable>
-                <el-input v-model="ruleForm.ibsn" />
+            <el-form-item label="ISBN" prop="isbn" placeholder="请输入ISBN" clearable>
+                <el-input v-model="ruleForm.isbn" />
             </el-form-item>
         </el-form>
         <template #footer>
@@ -32,11 +32,13 @@
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import type { FormInstance } from 'element-plus'
+import { $apiAppointmentAdd } from '@/api/index'
+
 const ruleForm = reactive({
     name: '',
     author: '',
-    press: '',
-    ibsn: '',
+    publish: '',
+    isbn: '',
 })
 const ruleFormRef = ref<FormInstance>()
 
@@ -49,12 +51,12 @@ const rules = reactive({
         { required: true, message: '请输入书名', trigger: 'blur' },
         { min: 2, max: 40, message: '请输入2-40位以内的作者名', trigger: 'blur' },
     ],
-    press: [
+    publish: [
         { required: true, message: '请输入出版社', trigger: 'blur' },
         { min: 2, max: 40, message: '请输入2-40位以内的出版社名', trigger: 'blur' },
     ],
-    ibsn: [
-        { required: true, message: '请输入IBSN', trigger: 'blur' },
+    isbn: [
+        { required: true, message: '请输入ISBN', trigger: 'blur' },
         { min: 2, max: 40, message: '请输入2-40位以内的IBSN编号', trigger: 'blur' },
     ],
 })
@@ -63,12 +65,23 @@ const dialogVisible = ref(false)
 const show = () => {
     dialogVisible.value = true
 }
-const close = () => {}
+const close = () => {
+    ruleFormRef.value.resetFields()
+}
+
+const emit = defineEmits(['appointmentList'])
 const submit = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    await formEl.validate((valid: Boolean) => {
+    await formEl.validate(async (valid: Boolean) => {
         if (valid) {
             ElMessage.success('校验通过！')
+            try {
+                const res = await $apiAppointmentAdd(ruleForm)
+                dialogVisible.value = false
+            } catch (error) {
+                console.log('提交预约失败')
+                console.error(error)
+            }
         }
     })
 }
