@@ -45,13 +45,13 @@
         </div>
     </div>
     <div class="content">
-        <router-view></router-view>
+        <router-view v-if="reloadRouter"></router-view>
     </div>
     <LoginDialog ref="loginRef" @get-user-msg="getUserMsg" @set-token="setToken"></LoginDialog>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, toRaw, onMounted, computed, provide } from 'vue'
+import { ref, reactive, toRaw, onMounted, computed, provide, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { Menu as IconMenu, ArrowDown } from '@element-plus/icons-vue'
 import LoginDialog from '@/components/login/indexPage.vue'
@@ -60,11 +60,20 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 
 provide('baseUrl', 'http://124.220.34.251:5250')
 
+const reloadRouter = ref(true)
+const reloadRouterFn = () => {
+    reloadRouter.value = false
+    nextTick(() => {
+        reloadRouter.value = true
+    })
+}
+
 const token = ref('')
 const localToken = localStorage.getItem('library_jwt_token')
 if (localToken) {
     token.value = localToken
 }
+
 const $router = useRouter()
 const $route = useRoute()
 
@@ -91,9 +100,7 @@ const getUserMsg = async () => {
     const res = await $apiUserMsg()
     username.value = res.username
 }
-const setToken = (val: string) => {
-    token.value = val
-}
+
 const handleSelect = (key: string, keyPath: string[]) => {
     $router.push({ name: key })
 }
@@ -109,15 +116,16 @@ const logOut = () => {
     })
         .then(() => {
             localStorage.removeItem('library_jwt_token')
-            token.value = ''
             username.value = ''
-            if (toRaw($route).name?.value === 'personalSpace') {
+            token.value = ''
+            if (['personalSpace'].includes(toRaw($route).name?.value)) {
                 toPage('homePage')
             }
             ElMessage({
                 type: 'success',
                 message: '退出登录成功',
             })
+            reloadRouterFn()
         })
         .catch(() => {
             ElMessage({
@@ -129,6 +137,10 @@ const logOut = () => {
 const toPage = (pathName: string) => {
     activeName.value = pathName
     $router.push({ name: pathName })
+}
+const setToken = (val: string) => {
+    token.value = val
+    reloadRouterFn()
 }
 </script>
 

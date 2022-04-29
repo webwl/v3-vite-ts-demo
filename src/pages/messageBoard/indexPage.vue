@@ -3,6 +3,8 @@
         <p class="msg-title">留言</p>
         <el-input
             v-model="myMsg"
+            :disabled="!isLogin"
+            :placeholder="isLogin ? '请输入留言' : '请登陆后再开始留言'"
             class="write-block"
             :rows="5"
             maxlength="500"
@@ -11,7 +13,7 @@
             @keyup.enter="open"
         />
         <div class="write-block-btns">
-            <el-button type="primary" @click="open">提交</el-button>
+            <el-button type="primary" :disabled="!isLogin" @click="open">提交</el-button>
         </div>
 
         <p class="msg-title">全部留言</p>
@@ -37,7 +39,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import { $apiMessageList, $apiMessageSave } from '@/api/index'
@@ -75,6 +77,12 @@ const open = () => {
         },
     })
 }
+
+// 登录状态
+const isLogin = computed(() => {
+    const localToken = localStorage.getItem('library_jwt_token')
+    return !!localToken
+})
 
 const currentPage = ref(1)
 const pageSize = ref(10)
