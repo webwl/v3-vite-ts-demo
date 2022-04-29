@@ -97,14 +97,14 @@ onMounted(async () => {
     }
 })
 const getUserMsg = async () => {
-    const res = await $apiUserMsg()
+    const res: any = await $apiUserMsg()
     username.value = res.username
 }
 
 const handleSelect = (key: string, keyPath: string[]) => {
     $router.push({ name: key })
 }
-const loginRef = ref(null)
+const loginRef = ref()
 const login = () => {
     loginRef.value?.show()
 }
@@ -118,7 +118,7 @@ const logOut = () => {
             localStorage.removeItem('library_jwt_token')
             username.value = ''
             token.value = ''
-            if (['personalSpace'].includes(toRaw($route).name?.value)) {
+            if (toRaw($route.name) === 'personalSpace') {
                 toPage('homePage')
             }
             ElMessage({

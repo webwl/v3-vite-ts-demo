@@ -43,6 +43,8 @@ import { ref, onMounted, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import { $apiMessageList, $apiMessageSave } from '@/api/index'
+import { IMessagListRes } from './utils/interfaces'
+
 const myMsg = ref('')
 
 const open = () => {
@@ -96,15 +98,14 @@ onMounted(() => {
 })
 const getList = async () => {
     try {
-        const res = await $apiMessageList({
+        const res: any = await $apiMessageList({
             page: currentPage.value,
             size: pageSize.value,
         })
         if (res) {
             total.value = res.total
-            messageList.value = res?.list
+            messageList.value = res.list
         }
-        console.log(res)
     } catch (error) {
         console.log('获取留言列表失败')
         console.error(error)

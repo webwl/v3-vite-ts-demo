@@ -2,7 +2,6 @@ export interface IPage {
     page: Number
     size: Number
 }
-
 // 登录表单
 export interface ILoginForm {
     username: String

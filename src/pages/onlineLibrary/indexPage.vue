@@ -90,7 +90,7 @@ const search = async (init?: string) => {
         currentPage.value = 1
     }
     try {
-        const res = await $apiBookSearch({
+        const res: any = await $apiBookSearch({
             ...formValue,
             page: currentPage.value,
             size: pageSize.value,

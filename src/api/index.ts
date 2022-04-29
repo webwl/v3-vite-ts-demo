@@ -44,6 +44,8 @@ export const $apiHotBookList = () => {
 import { IPage, IMessageSave } from './apiInterface'
 // 获取留言列表
 export const $apiMessageList = (params: IPage) => {
+    const a = $get('/message/list', params)
+    console.log(a)
     return $get('/message/list', params)
 }
 // 留言

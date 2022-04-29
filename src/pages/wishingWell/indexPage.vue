@@ -76,7 +76,7 @@ const search = async (init?: string) => {
         currentPage.value = 1
     }
     try {
-        const res = await $apiAppointmentList({
+        const res: any = await $apiAppointmentList({
             ...formValue,
             page: currentPage.value,
             size: pageSize.value,
@@ -101,7 +101,7 @@ const handleCurrentChange = (val: number) => {
     search()
 }
 
-const addRef = ref(null)
+const addRef = ref()
 const showAddDialog = () => {
     addRef.value?.show()
 }
