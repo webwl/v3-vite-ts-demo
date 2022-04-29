@@ -10,32 +10,32 @@
     <div class="content-bg">
         <div class="content">
             <el-carousel :interval="4000" type="card" height="350px">
-                <el-carousel-item v-for="item of bannerList" :key="item.id">
+                <el-carousel-item v-for="item of bannerList.arr" :key="item.id">
                     <div class="banner">
                         <div class="info-block">
-                            <p class="name">{{ item?.name }}</p>
-                            <p class="author">{{ item?.author }}</p>
-                            <p class="intro">{{ item?.intro }}</p>
+                            <p class="name">{{ item.name }}</p>
+                            <p class="author">{{ item.author }}</p>
+                            <p class="intro">{{ item.intro }}</p>
                         </div>
                         <div class="img-block">
-                            <img class="img" :src="baseUrl + item?.cover" />
+                            <img class="img" :src="baseUrl + item.cover" />
                         </div>
                     </div>
                 </el-carousel-item>
             </el-carousel>
             <el-row class="lists" :gutter="20">
-                <el-col v-for="item in lists" :key="item.type" :span="8">
+                <el-col v-for="item of lists.arr" :key="item.type" :span="8">
                     <div class="list">
                         <div class="list-title">{{ item.name }}</div>
                         <div class="list-content">
                             <ul>
                                 <li
                                     v-for="listItem of item.list"
-                                    :key="listItem?.id"
+                                    :key="listItem.id"
                                     class="list-item"
                                 >
-                                    <div class="name">{{ listItem?.name }}</div>
-                                    <div class="author">{{ listItem?.author }}</div>
+                                    <div class="name">{{ listItem.name }}</div>
+                                    <div class="author">{{ listItem.author }}</div>
                                 </li>
                             </ul>
                         </div>
@@ -46,33 +46,38 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive, onMounted, inject } from 'vue'
+import { ref, reactive, onMounted, inject, Ref } from 'vue'
 import { $apiHotBookList } from '@/api/index'
+import { IBannerList, IHotReactive } from './utlis/interfaces'
 
 const baseUrl = inject('baseUrl')
-const lists = reactive([
-    {
-        type: 'BOOK',
-        name: '图书',
-        list: [],
-    },
-    {
-        type: 'TUTORIAL',
-        name: '教程',
-        list: [],
-    },
-    {
-        type: 'PERIODICAL',
-        name: '期刊',
-        list: [],
-    },
-])
+const lists: IHotReactive = reactive({
+    arr: [
+        {
+            type: 'BOOK',
+            name: '图书',
+            list: [],
+        },
+        {
+            type: 'TUTORIAL',
+            name: '教程',
+            list: [],
+        },
+        {
+            type: 'PERIODICAL',
+            name: '期刊',
+            list: [],
+        },
+    ],
+})
 
 onMounted(() => {
     search()
 })
 
-const bannerList = ref()
+const bannerList: IBannerList = reactive({
+    arr: [],
+})
 const typeMap = {
     BOOK: '图书',
     TUTORIAL: '教程',
@@ -80,21 +85,24 @@ const typeMap = {
 }
 const search = async () => {
     try {
-        const res = await $apiHotBookList()
+        const res: any = await $apiHotBookList()
         if (res) {
             const bannerArr = []
             for (const type in res) {
-                const currentArr = lists.find((x) => {
+                const currentArr = lists.arr.find((x) => {
                     return x.type === type
                 })
-                currentArr.list = res[type]
+                if (currentArr) {
+                    currentArr.list = res[type]
+                }
+                // 将每种榜单的前两位用做banner
                 for (let i = 0; i < 2; i++) {
                     if (res[type][i]) {
                         bannerArr.push(res[type][i])
                     }
                 }
             }
-            bannerList.value = bannerArr
+            bannerList.arr = bannerArr
         }
     } catch (error) {
         console.log('获取热读榜失败')

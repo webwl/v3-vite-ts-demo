@@ -31,7 +31,6 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import type { FormInstance } from 'element-plus'
 import { $apiAppointmentAdd } from '@/api/index'
 
 const ruleForm = reactive({
@@ -40,7 +39,7 @@ const ruleForm = reactive({
     publish: '',
     isbn: '',
 })
-const ruleFormRef = ref<FormInstance>()
+const ruleFormRef = ref()
 
 const rules = reactive({
     name: [
@@ -70,7 +69,7 @@ const close = () => {
 }
 
 const emit = defineEmits(['appointmentList'])
-const submit = async (formEl: FormInstance | undefined) => {
+const submit = async (formEl: any) => {
     if (!formEl) return
     await formEl.validate(async (valid: Boolean) => {
         if (valid) {

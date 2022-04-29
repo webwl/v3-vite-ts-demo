@@ -29,7 +29,6 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import type { FormInstance } from 'element-plus'
 import { $apiLogin } from '../../api/index'
 
 const emit = defineEmits(['getUserMsg', 'setToken'])
@@ -39,7 +38,7 @@ const ruleForm = reactive({
     password: '',
     rememberMe: true,
 })
-const ruleFormRef = ref<FormInstance>()
+const ruleFormRef = ref()
 
 const validatePassword = (rule: any, value: any, callback: any) => {
     const Reg = /^[A-Za-z0-9]{4,20}$/
@@ -67,7 +66,7 @@ const show = () => {
     dialogVisible.value = true
 }
 const close = () => {}
-const submit = async (formEl: FormInstance | undefined) => {
+const submit = async (formEl: any) => {
     if (!formEl) return
     await formEl.validate(async (valid: Boolean) => {
         if (valid) {
