@@ -17,7 +17,11 @@
                                 <p class="intro">{{ highlyRrecommended[0]?.intro }}</p>
                             </div>
                             <div class="img-block">
-                                <img class="img" :src="baseUrl + highlyRrecommended[0]?.cover" />
+                                <img
+                                    class="img"
+                                    :src="baseUrl + highlyRrecommended[0]?.cover"
+                                    @click="toDetail(highlyRrecommended[0]?.id)"
+                                />
                             </div>
                         </div>
                     </td>
@@ -129,6 +133,7 @@
 import { Message, Location, PhoneFilled } from '@element-plus/icons-vue'
 import { onMounted, reactive, ref, toRefs, inject } from 'vue'
 import { $apiBookRecommend } from '@/api/index'
+import { useRouter, useRoute } from 'vue-router'
 
 const bannerList = ['banner1', 'banner2', 'banner3', 'banner4', 'banner5']
 
@@ -157,6 +162,16 @@ const getRecommend = async () => {
         console.log('获取推荐书籍失败')
         console.error(error)
     }
+}
+
+const $router = useRouter()
+const toDetail = (bookId: string | number) => {
+    $router.push({
+        name: 'bookDetail',
+        query: {
+            id: bookId,
+        },
+    })
 }
 </script>
 

@@ -56,6 +56,14 @@ const router = createRouter({
             },
             component: () => import('@/pages/personalSpace/indexPage.vue'),
         },
+        {
+            path: '/book-detail',
+            name: 'bookDetail',
+            meta: {
+                title: '书籍详情',
+            },
+            component: () => import('@/pages/bookDetail/indexPage.vue'),
+        },
     ],
 })
 // router.beforeEach((to, from, next) => {
