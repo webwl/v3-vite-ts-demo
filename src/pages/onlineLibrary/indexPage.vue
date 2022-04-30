@@ -49,10 +49,10 @@
                 <p class="series">丛书名称：{{ item.translate }}</p>
                 <p class="intro" :title="item.intro">简介：{{ item.intro }}</p>
                 <div class="inventory">
-                    <div class="inventory-item">借出（本）：1</div>
-                    <div class="inventory-item">在馆（本）：8</div>
+                    <div class="inventory-item">借出（本）：{{ item.borrowedNum }}</div>
+                    <div class="inventory-item">在馆（本）：{{ item.size - item.borrowedNum }}</div>
                     <div class="inventory-item">总馆藏量：{{ item.size }}</div>
-                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
+                    <div class="inventory-item">馆藏地址：{{ item.location }}</div>
                 </div>
             </div>
         </div>

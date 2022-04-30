@@ -8,6 +8,8 @@ export interface IBookDetail {
     publish: string
     isbn: string
     publishTime: string
+    location: string
+    borrowedNum: number
 }
 
 // 书评列表

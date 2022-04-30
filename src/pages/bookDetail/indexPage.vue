@@ -15,34 +15,16 @@
                     <div class="inventory-item">出版日期：{{ bookDetail.data.publishTime }}</div>
                 </div>
                 <div class="inventory">
-                    <div class="inventory-item">借出（本）：1</div>
-                    <div class="inventory-item">在馆（本）：8</div>
-                    <div class="inventory-item">总馆藏量：xx</div>
-                    <div class="inventory-item">馆藏地址：xxx图书馆</div>
+                    <div class="inventory-item">借出（本）：{{ bookDetail.data.borrowedNum }}</div>
+                    <div class="inventory-item">
+                        在馆（本）：{{ bookDetail.data.size - bookDetail.data.borrowedNum }}
+                    </div>
+                    <div class="inventory-item">总馆藏量：{{ bookDetail.data.size }}</div>
+                    <div class="inventory-item">馆藏地址：{{ bookDetail.data.location }}</div>
                 </div>
             </div>
         </div>
-
-        <!-- <div class="estimate-block">
-            <p class="msg-title">书评</p>
-            <el-input
-                v-model="myEstimate"
-                :disabled="!isLogin"
-                :placeholder="isLogin ? '请输入留言' : '请登陆后再填写书评'"
-                class="write-block"
-                :rows="5"
-                maxlength="500"
-                show-word-limit
-                type="textarea"
-                @keyup.enter="open"
-            />
-            <div class="write-block-btns">
-                <el-button type="primary" :disabled="!isLogin" @click="open">提交</el-button>
-            </div>
-        </div> -->
-
         <p class="msg-title">全部书评</p>
-        <!--  v-if="estimateList.length"  -->
         <div class="list-block">
             <div v-for="item of estimateList" :key="item.id" class="list">
                 <div class="list-head">
@@ -62,7 +44,6 @@
                 @current-change="handleCurrentChange"
             />
         </div>
-        <!-- <div v-else class="no-estimate">暂无书评</div> -->
     </div>
 </template>
 <script lang="ts" setup>
@@ -93,6 +74,8 @@ const bookDetail = reactive({
         publish: '',
         isbn: '',
         publishTime: '',
+        location: '',
+        borrowedNum: 0,
     },
 })
 
@@ -133,40 +116,6 @@ const getList = async () => {
         console.error(error)
     }
 }
-// const open = () => {
-//     if (!myEstimate.value) {
-//         ElMessage({
-//             type: 'warning',
-//             message: '请输入书评',
-//         })
-//         return
-//     }
-//     ElMessageBox.alert('确认提交书评吗？', '提示', {
-//         confirmButtonText: '确定',
-//         callback: async (action: Action) => {
-//             if (action === 'confirm') {
-//                 try {
-//                     const res = await $apiBookEstimateSave<IBookEstimateSave>({
-//                         title: '111',
-//                         content: myEstimate.value,
-//                         rate: 0,
-//                         borrowId: 0,
-//                     })
-//                     console.log(res)
-//                     ElMessage({
-//                         type: 'success',
-//                         message: '保存成功',
-//                     })
-//                     myEstimate.value = ''
-//                     getList()
-//                 } catch (error) {
-//                     console.log('提交留言失败')
-//                     console.error(error)
-//                 }
-//             }
-//         },
-//     })
-// }
 </script>
 <style lang="less" scoped>
 .container {
