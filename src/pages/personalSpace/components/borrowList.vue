@@ -13,7 +13,7 @@
                     <span class="interval">约定归还时间：{{ item.endTime }}</span>
                 </p>
             </div>
-            <el-button type="primary" class="estimate-btn" @click="showEstimateDialog"
+            <el-button type="primary" class="estimate-btn" @click="showEstimateDialog(item.id)"
                 >评价</el-button
             >
         </div>
@@ -26,7 +26,7 @@
             @current-change="handleCurrentChange"
         />
     </div>
-    <EstimateDialog ref="dialogRef"></EstimateDialog>
+    <EstimateDialog ref="dialogRef" :borrow-id="borrowId"></EstimateDialog>
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
@@ -37,12 +37,14 @@ onMounted(() => {
     getList()
 })
 const dialogRef = ref()
-const showEstimateDialog = () => {
-    dialogRef.value.show()
+const borrowId = ref('')
+const showEstimateDialog = (id: string) => {
+    dialogRef.value.show(id)
 }
 const list: IBorrowListData = reactive({
     data: [],
 })
+
 const currentPage = ref(1)
 const pageSize = ref(10)
 const total = ref(0)
