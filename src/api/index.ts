@@ -2,7 +2,6 @@ import { $get, $post } from '../utils/request'
 
 /**
  * 用户模块
- * START
  */
 
 import { ILoginForm } from './apiInterface'
@@ -19,7 +18,6 @@ export const $apiUserMsg = () => {
 
 /**
  * 图书模块
- * START
  */
 
 import { ISearchForm } from './apiInterface'
@@ -39,7 +37,6 @@ export const $apiHotBookList = () => {
 
 /**
  * 留言模块
- * START
  */
 import { IPage, IMessageSave } from './apiInterface'
 // 获取留言列表
@@ -55,7 +52,6 @@ export const $apiMessageSave = (params: IMessageSave) => {
 
 /**
  * 预约书籍模块
- * START
  */
 import { IAppointmentList, IAppointmentAdd } from './apiInterface'
 
@@ -66,4 +62,21 @@ export const $apiAppointmentList = (params: IAppointmentList) => {
 // 添加预约书籍
 export const $apiAppointmentAdd = (params: IAppointmentAdd) => {
     return $post('/appointment/submit', params)
+}
+
+/**
+ * 书籍详情模块
+ */
+import { IBookEstimate, IBookEstimateSave } from './apiInterface'
+// 获取书籍详情
+export const $apiBookDetail = <T>(id: string): Promise<T> => {
+    return $get<T>(`/book/detail/${JSON.parse(id)}`)
+}
+// 获取书评列表
+export const $apiBookEstimate = <T>(params: IBookEstimate): Promise<T> => {
+    return $get<T>('/comment/list', params)
+}
+// 添加书评
+export const $apiBookEstimateSave = <T>(params: IBookEstimateSave): Promise<T> => {
+    return $post<T>('/comment/publish', params)
 }

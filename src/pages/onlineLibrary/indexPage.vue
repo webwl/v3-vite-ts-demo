@@ -98,6 +98,7 @@ const search = async (init?: string) => {
         if (res) {
             total.value = res?.total
             bookList.value = res?.list
+            console.log('bookList:', bookList.value)
         }
     } catch (error) {
         console.log('获取图书列表失败')

@@ -81,10 +81,7 @@ const open = () => {
 }
 
 // 登录状态
-const isLogin = computed(() => {
-    const localToken = localStorage.getItem('library_jwt_token')
-    return !!localToken
-})
+const isLogin = !!localStorage.getItem('library_jwt_token')
 
 const currentPage = ref(1)
 const pageSize = ref(10)

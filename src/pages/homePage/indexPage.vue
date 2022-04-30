@@ -31,6 +31,7 @@
                                 class="img"
                                 :src="baseUrl + generalRrecommended[0]?.cover"
                                 :alt="generalRrecommended[0]?.name || '推荐图书'"
+                                @click="toDetail(generalRrecommended[0]?.id)"
                             />
                         </div>
                     </td>
@@ -40,6 +41,7 @@
                                 class="img"
                                 :src="baseUrl + generalRrecommended[1]?.cover"
                                 :alt="generalRrecommended[1]?.name || '推荐图书'"
+                                @click="toDetail(generalRrecommended[1]?.id)"
                             />
                         </div>
                     </td>
@@ -49,6 +51,7 @@
                                 class="img"
                                 :src="baseUrl + generalRrecommended[2]?.cover"
                                 :alt="generalRrecommended[2]?.name || '推荐图书'"
+                                @click="toDetail(generalRrecommended[2]?.id)"
                             />
                         </div>
                     </td>
@@ -62,7 +65,11 @@
                                 <p class="intro">{{ highlyRrecommended[1]?.intro }}</p>
                             </div>
                             <div class="img-block">
-                                <img class="img" :src="baseUrl + highlyRrecommended[1]?.cover" />
+                                <img
+                                    class="img"
+                                    :src="baseUrl + highlyRrecommended[1]?.cover"
+                                    @click="toDetail(highlyRrecommended[1]?.id)"
+                                />
                             </div>
                         </div>
                     </td>
@@ -72,6 +79,7 @@
                                 class="img"
                                 :src="baseUrl + generalRrecommended[3]?.cover"
                                 :alt="generalRrecommended[3]?.name"
+                                @click="toDetail(generalRrecommended[3]?.id)"
                             />
                         </div>
                     </td>
@@ -83,6 +91,7 @@
                                 class="img"
                                 :src="baseUrl + generalRrecommended[4]?.cover"
                                 :alt="generalRrecommended[4]?.name || '推荐图书'"
+                                @click="toDetail(generalRrecommended[4]?.id)"
                             />
                         </div>
                     </td>
@@ -92,6 +101,7 @@
                                 class="img"
                                 :src="baseUrl + generalRrecommended[5]?.cover"
                                 :alt="generalRrecommended[5]?.name || '推荐图书'"
+                                @click="toDetail(generalRrecommended[5]?.id)"
                             />
                         </div>
                     </td>
@@ -101,6 +111,7 @@
                                 class="img"
                                 :src="baseUrl + generalRrecommended[6]?.cover"
                                 :alt="generalRrecommended[6]?.name || '推荐图书'"
+                                @click="toDetail(generalRrecommended[6]?.id)"
                             />
                         </div>
                     </td>

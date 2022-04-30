@@ -34,3 +34,14 @@ export interface IAppointmentAdd {
     name: String
     publish: String
 }
+// 书籍评价列表请求参数
+export interface IBookEstimate extends IPage {
+    bookId: String
+}
+// 添加书评
+export interface IBookEstimateSave {
+    borrowId: number
+    content: string
+    rate: number
+    title: string
+}

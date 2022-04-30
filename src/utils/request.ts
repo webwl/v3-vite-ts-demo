@@ -19,13 +19,13 @@ interface IOptionForm {
     loading?: Boolean
     error?: Boolean
 }
-function request(
+function request<T>(
     method: string,
     url: string,
     params?: any,
     options: IOptionForm = { loading: true, error: false },
-) {
-    let loadingInstance: any = null
+): Promise<T> {
+    let loadingInstance: any = false
     // 请求前loading
     if (options.loading) {
         loadingInstance = ElLoading.service()
@@ -68,11 +68,11 @@ function request(
     })
 }
 // 封装GET请求
-function $get(url: string, params?: any, options?: IOptionForm) {
-    return request('get', url, params, options)
+function $get<T>(url: string, params?: any, options?: IOptionForm): Promise<T> {
+    return request<T>('get', url, params, options)
 }
 // 封装POST请求
-function $post(url: string, params?: any, options?: IOptionForm) {
-    return request('post', url, params, options)
+function $post<T>(url: string, params?: any, options?: IOptionForm): Promise<T> {
+    return request<T>('post', url, params, options)
 }
 export { $get, $post }
