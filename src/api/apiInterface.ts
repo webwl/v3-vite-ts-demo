@@ -42,8 +42,8 @@ export interface IBookEstimate extends IPage {
 export interface IBookEstimateSave {
     borrowId: number
     content: string
-    rate: number
     title: string
+    rate: number
 }
 
 // 用户信息

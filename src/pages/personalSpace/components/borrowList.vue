@@ -13,6 +13,9 @@
                     <span class="interval">约定归还时间：{{ item.endTime }}</span>
                 </p>
             </div>
+            <el-button type="primary" class="estimate-btn" @click="showEstimateDialog"
+                >评价</el-button
+            >
         </div>
         <el-pagination
             v-model:currentPage="currentPage"
@@ -23,15 +26,20 @@
             @current-change="handleCurrentChange"
         />
     </div>
+    <EstimateDialog ref="dialogRef"></EstimateDialog>
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
 import { $apiPersonalBorrowList } from '@/api/index'
 import { IBorrowList, IBorrowListData } from '../utils/interfaces'
+import EstimateDialog from './estimateDialog.vue'
 onMounted(() => {
     getList()
 })
-
+const dialogRef = ref()
+const showEstimateDialog = () => {
+    dialogRef.value.show()
+}
 const list: IBorrowListData = reactive({
     data: [],
 })
@@ -70,6 +78,12 @@ const handleCurrentChange = () => {
         border-bottom: 1px dashed #cdcdcd;
         margin-bottom: 10px;
         overflow: hidden;
+        position: relative;
+        .estimate-btn {
+            position: absolute;
+            right: 0;
+            top: 35%;
+        }
         .book-info {
             margin-top: 10px;
             float: left;

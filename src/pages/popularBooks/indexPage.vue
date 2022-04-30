@@ -17,7 +17,7 @@
                             <p class="author">{{ item.author }}</p>
                             <p class="intro">{{ item.intro }}</p>
                         </div>
-                        <div class="img-block">
+                        <div class="img-block" @click="toDetail(item.id)">
                             <img class="img" :src="baseUrl + item.cover" />
                         </div>
                     </div>
@@ -34,7 +34,9 @@
                                     :key="listItem.id"
                                     class="list-item"
                                 >
-                                    <div class="name">{{ listItem.name }}</div>
+                                    <div class="name" @click="toDetail(listItem.id)">
+                                        {{ listItem.name }}
+                                    </div>
                                     <div class="author">{{ listItem.author }}</div>
                                 </li>
                             </ul>
@@ -49,6 +51,7 @@
 import { ref, reactive, onMounted, inject, Ref } from 'vue'
 import { $apiHotBookList } from '@/api/index'
 import { IBannerList, IHotReactive } from './utlis/interfaces'
+import { useRouter } from 'vue-router'
 
 const baseUrl = inject('baseUrl')
 const lists: IHotReactive = reactive({
@@ -109,6 +112,15 @@ const search = async () => {
         console.error(error)
     }
 }
+const $router = useRouter()
+const toDetail = (bookId: string | number) => {
+    $router.push({
+        name: 'bookDetail',
+        query: {
+            id: bookId,
+        },
+    })
+}
 </script>
 
 <style lang="less" scoped>
@@ -145,6 +157,7 @@ const search = async () => {
             font-size: 20px;
             color: #333;
             margin: 80px 0 10px 30px;
+            cursor: pointer;
         }
         .author {
             font-size: 14px;

@@ -41,14 +41,14 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 }
 const activeTab = ref('borrowList')
 interface IActiveComponent {
-    borrowList: string
-    estimateList: string
-    messageList: string
+    borrowList: any
+    estimateList: any
+    messageList: any
 }
 const acitveComponent: IActiveComponent = {
-    borrowList: 'BorrowList',
-    estimateList: 'EstimateList',
-    messageList: 'MessageList',
+    borrowList: BorrowList,
+    estimateList: EstimateList,
+    messageList: MessageList,
 }
 const currentComponent = computed(() => {
     return acitveComponent[activeTab.value as keyof IActiveComponent]
