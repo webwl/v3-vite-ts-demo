@@ -19,13 +19,13 @@
                 <el-tab-pane label="我的书评" name="estimateList"> </el-tab-pane>
                 <el-tab-pane label="我的留言" name="messageList"> </el-tab-pane>
             </el-tabs>
-            <component :is="acitveComponent[activeTab]"></component>
+            <component :is="currentComponent"></component>
         </div>
         <EditDialog ref="editRef" :user-msg="user"></EditDialog>
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import type { TabsPaneContext } from 'element-plus'
 import { $apiUserMsg } from '@/api/index'
 import BorrowList from './components/borrowList.vue'
@@ -40,10 +40,18 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log(tab, event)
 }
 const activeTab = ref('borrowList')
-const acitveComponent = reactive({
-    borrowList: BorrowList,
-    estimateList: EstimateList,
-    messageList: MessageList,
+interface IActiveComponent {
+    borrowList: string
+    estimateList: string
+    messageList: string
+}
+const acitveComponent: IActiveComponent = {
+    borrowList: 'BorrowList',
+    estimateList: 'EstimateList',
+    messageList: 'MessageList',
+}
+const currentComponent = computed(() => {
+    return acitveComponent[activeTab.value as keyof IActiveComponent]
 })
 const editRef = ref()
 const showEdit = () => {
