@@ -13,7 +13,10 @@
                     <span class="interval">约定归还时间：{{ item.endTime }}</span>
                 </p>
             </div>
-            <el-button type="primary" class="estimate-btn" @click="showEstimateDialog(item.id)"
+            <el-button
+                type="primary"
+                class="estimate-btn"
+                @click="showEstimateDialog(Number(item.id))"
                 >评价</el-button
             >
         </div>
@@ -38,7 +41,7 @@ onMounted(() => {
 })
 const dialogRef = ref()
 const borrowId = ref('')
-const showEstimateDialog = (id: string) => {
+const showEstimateDialog = (id: Number) => {
     dialogRef.value.show(id)
 }
 const list: IBorrowListData = reactive({

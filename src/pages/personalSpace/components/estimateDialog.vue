@@ -24,17 +24,12 @@ import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import { $apiBookEstimateSave } from '@/api/index'
-// const props = defineProps({
-//     borrowId: {
-//         type: String,
-//         default: '',
-//     },
-// })
+
 const dialogVisible = ref(false)
 const estimateText = ref('')
 const rate = ref(0)
-const borrowId = ref('')
-const show = (val: string) => {
+const borrowId = ref(0)
+const show = (val: number) => {
     borrowId.value = val
     dialogVisible.value = true
 }
