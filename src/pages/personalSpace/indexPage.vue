@@ -1,14 +1,14 @@
 <template>
     <div class="container">
         <div class="data">
-            <p class="name">{{ userMsg.data.nickName }}</p>
+            <p class="name">{{ user.nickName }}</p>
             <p class="motto">
-                <span class="real-msg">姓名：{{ userMsg.data.realName }}</span>
-                <span class="real-msg">班级：{{ userMsg.data.className }}</span>
-                <span class="real-msg">电话：{{ userMsg.data.tel }}</span>
-                <span class="real-msg">邮箱：{{ userMsg.data.email }}</span>
+                <span class="real-msg">姓名：{{ user.realName }}</span>
+                <span class="real-msg">班级：{{ user.className }}</span>
+                <span class="real-msg">电话：{{ user.tel }}</span>
+                <span class="real-msg">邮箱：{{ user.email }}</span>
             </p>
-            <p class="domain">角色：{{ userMsg.data.role }}</p>
+            <p class="domain">角色：{{ user.role }}</p>
             <el-button class="edit-btn" type="primary" plain @click="showEdit"
                 >编辑个人资料</el-button
             >
@@ -21,7 +21,7 @@
             </el-tabs>
             <component :is="acitveComponent[activeTab]"></component>
         </div>
-        <EditDialog ref="editRef" :user-msg="userMsg.data" @refersh="getUserMsg"></EditDialog>
+        <EditDialog ref="editRef" :user-msg="user"></EditDialog>
     </div>
 </template>
 <script lang="ts" setup>
@@ -32,6 +32,10 @@ import BorrowList from './components/borrowList.vue'
 import EstimateList from './components/estimateList.vue'
 import MessageList from './components/messageList.vue'
 import EditDialog from './components/editMsg.vue'
+import { useUserMsg } from '@/components/userMsg'
+
+const { user } = useUserMsg()
+
 const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log(tab, event)
 }
@@ -41,44 +45,6 @@ const acitveComponent = reactive({
     estimateList: EstimateList,
     messageList: MessageList,
 })
-onMounted(async () => {
-    getUserMsg()
-})
-interface IUserMsg {
-    className: string
-    email: string
-    id: Number
-    idCard: string
-    nickName: string
-    realName: string
-    role: Number
-    size: Number
-    status: Number
-    tel: string
-    username: string
-}
-interface IUserData {
-    data: IUserMsg
-}
-const userMsg: IUserData = reactive({
-    data: {
-        className: '',
-        email: '',
-        id: 0,
-        idCard: '',
-        nickName: '',
-        realName: '',
-        role: 0,
-        size: 0,
-        status: 0,
-        tel: '',
-        username: '',
-    },
-})
-const getUserMsg = async () => {
-    const res = await $apiUserMsg<IUserMsg>()
-    userMsg.data = res
-}
 const editRef = ref()
 const showEdit = () => {
     editRef.value.show()

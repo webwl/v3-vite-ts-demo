@@ -1,40 +1,61 @@
 <template>
     <div class="content">
-        <div class="book">
+        <div v-for="item of list.data" :key="item.id" class="book">
             <div class="book-info">
-                <p class="book-title">《沉默的羔羊11》</p>
+                <p class="book-title">《{{ item.name }}》</p>
                 <p class="author">
-                    <span class="author-row">作者：托马斯·哈里斯</span>
-                    <span class="author-row">出版社：南京</span>
-                    <span class="author-row">ISBN": 000001</span>
+                    <span class="author-row">作者：{{ item.author }}</span>
+                    <span class="author-row">出版社：{{ item.publish }}</span>
+                    <span class="author-row">ISBN: {{ item.isbn }}</span>
                 </p>
                 <p class="borrow-msg">
-                    <span class="interval">借阅时间：2022年1月1日</span>
-                    <span class="interval">约定归还时间：2022年1月1日</span>
-                    <span class="interval">归还地址: xxxx图书馆</span>
+                    <span class="interval">借阅时间：{{ item.createTime }}</span>
+                    <span class="interval">约定归还时间：{{ item.endTime }}</span>
                 </p>
             </div>
         </div>
-        <div class="book">
-            <div class="book-info">
-                <p class="book-title">《沉默的羔羊》</p>
-                <p class="author">
-                    <span class="author-row">作者：托马斯·哈里斯</span>
-                    <span class="author-row">出版社：南京</span>
-                    <span class="author-row">ISBN": 000001</span>
-                </p>
-                <p class="borrow-msg">
-                    <span class="interval">借阅时间：2022年1月1日</span>
-                    <span class="interval">约定归还时间：2022年1月1日</span>
-                    <span class="interval">归还地址: xxxx图书馆</span>
-                </p>
-            </div>
-        </div>
+        <el-pagination
+            v-model:currentPage="currentPage"
+            v-model:page-size="pageSize"
+            class="pagination"
+            layout="prev, pager, next"
+            :total="total"
+            @current-change="handleCurrentChange"
+        />
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { $apiPersonalBorrowList } from '@/api/index'
+import { IBorrowList, IBorrowListData } from '../utils/interfaces'
+onMounted(() => {
+    getList()
+})
+
+const list: IBorrowListData = reactive({
+    data: [],
+})
+const currentPage = ref(1)
+const pageSize = ref(10)
+const total = ref(0)
+const getList = async () => {
+    try {
+        const res = await $apiPersonalBorrowList<IBorrowList>({
+            page: currentPage.value,
+            size: pageSize.value,
+        })
+        if (res) {
+            total.value = res.total
+            list.data = res.list
+        }
+    } catch (error) {
+        console.log('获取借阅列表失败')
+        console.error(error)
+    }
+}
+const handleCurrentChange = () => {
+    getList()
+}
 </script>
 
 <style lang="less" scoped>

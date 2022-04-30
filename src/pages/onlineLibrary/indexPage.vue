@@ -34,11 +34,11 @@
     </div>
     <div class="content">
         <div v-for="item of bookList" :key="item.id" class="book">
-            <div class="book-img">
+            <div class="book-img" @click="toDetail(item.id)">
                 <img class="book-img-src" :src="baseUrl + item.cover" />
             </div>
             <div class="book-info">
-                <p class="book-title">{{ item.name }}</p>
+                <p class="book-title">《{{ item.name }}》</p>
                 <p class="author">
                     <span class="author-row">作者：{{ item.author }}</span>
                     <span class="author-row">页数：{{ item.pages }}</span>
@@ -69,7 +69,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, inject } from 'vue'
 import { $apiBookSearch } from '@/api/index'
-
+import { useRouter } from 'vue-router'
 const baseUrl = inject('baseUrl')
 
 const formValue = reactive({
@@ -98,7 +98,6 @@ const search = async (init?: string) => {
         if (res) {
             total.value = res?.total
             bookList.value = res?.list
-            console.log('bookList:', bookList.value)
         }
     } catch (error) {
         console.log('获取图书列表失败')
@@ -108,6 +107,15 @@ const search = async (init?: string) => {
 
 const handleCurrentChange = (val: number) => {
     search()
+}
+const $router = useRouter()
+const toDetail = (bookId: string | number) => {
+    $router.push({
+        name: 'bookDetail',
+        query: {
+            id: bookId,
+        },
+    })
 }
 </script>
 
@@ -150,17 +158,18 @@ const handleCurrentChange = (val: number) => {
         margin-bottom: 10px;
         padding-bottom: 10px;
         .book-img {
-            width: 100px;
-            height: 130px;
+            width: 130px;
+            height: 150px;
             float: left;
             margin: 10px 10px 0 10px;
+            cursor: pointer;
             .book-img-src {
-                width: 100px;
-                height: 130px;
+                width: 100%;
+                height: 100%;
             }
         }
         .book-info {
-            width: calc(100% - 140px);
+            width: calc(100% - 170px);
             height: 130px;
             margin-top: 10px;
             float: left;

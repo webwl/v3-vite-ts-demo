@@ -7,7 +7,7 @@
             label-width="80px"
             class="demo-ruleForm"
         >
-            <el-form-item label="学号" prop="username" placeholder="请输入学号" clearable>
+            <el-form-item label="账号" prop="username" placeholder="请输入账号" clearable>
                 <el-input v-model="ruleForm.username" />
             </el-form-item>
             <el-form-item label="密码" prop="password" placeholder="请输入密码" clearable>
@@ -52,8 +52,8 @@ const validatePassword = (rule: any, value: any, callback: any) => {
 }
 const rules = reactive({
     username: [
-        { required: true, message: '请输入学号', trigger: 'blur' },
-        { min: 4, max: 20, message: '请输入4-20位以内的学号', trigger: 'blur' },
+        { required: true, message: '请输入账号', trigger: 'blur' },
+        { min: 4, max: 20, message: '请输入4-20位以内的账号', trigger: 'blur' },
     ],
     password: [
         { required: true, message: '请输入密码', trigger: 'blur' },

@@ -46,11 +46,6 @@ export interface IBookEstimateSave {
     title: string
 }
 
-// 借阅列表
-export interface IPersonalBorrowReq extends IPage {
-    isReturned: ''
-}
-
 // 用户信息
 export interface IUserMsg {
     email: string

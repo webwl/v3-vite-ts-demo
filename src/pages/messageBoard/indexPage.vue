@@ -64,7 +64,6 @@ const open = () => {
                         title: '111',
                         content: myMsg.value,
                     })
-                    console.log(res)
                     ElMessage({
                         type: 'success',
                         message: '保存成功',

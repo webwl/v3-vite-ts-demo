@@ -45,8 +45,6 @@ export const $apiHotBookList = () => {
 import { IPage, IMessageSave } from './apiInterface'
 // 获取留言列表
 export const $apiMessageList = (params: IPage) => {
-    const a = $get('/message/list', params)
-    console.log(a)
     return $get('/message/list', params)
 }
 // 留言
@@ -88,8 +86,15 @@ export const $apiBookEstimateSave = <T>(params: IBookEstimateSave): Promise<T> =
 /**
  * 个人中心
  */
-import { IPersonalBorrowReq } from './apiInterface'
 // 获取借阅列表
-export const $apiPersonalBorrowList = <T>(params: IPersonalBorrowReq): Promise<T> => {
+export const $apiPersonalBorrowList = <T>(params: IPage): Promise<T> => {
     return $get<T>('/borrow/list', params)
+}
+// 获取书评列表
+export const $apiPersonalEstimateList = <T>(params: IPage): Promise<T> => {
+    return $get<T>('/comment/mine', params)
+}
+// 获取留言列表
+export const $apiPersonalMessageList = <T>(params: IPage): Promise<T> => {
+    return $get<T>('/message/mine', params)
 }

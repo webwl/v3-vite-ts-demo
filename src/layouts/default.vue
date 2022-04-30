@@ -28,7 +28,7 @@
             >
             <el-dropdown v-else class="user-dropdown">
                 <span class="el-dropdown-link user-name">
-                    {{ username }}
+                    {{ user.nickName }}
                     <el-icon class="el-icon--right user-icon">
                         <arrow-down />
                     </el-icon>
@@ -47,7 +47,7 @@
     <div class="content">
         <router-view v-if="reloadRouter"></router-view>
     </div>
-    <LoginDialog ref="loginRef" @get-user-msg="getUserMsg" @set-token="setToken"></LoginDialog>
+    <LoginDialog ref="loginRef" @set-token="setToken"></LoginDialog>
 </template>
 
 <script lang="ts" setup>
@@ -55,8 +55,8 @@ import { ref, reactive, toRaw, onMounted, computed, provide, nextTick } from 'vu
 import { useRouter, useRoute } from 'vue-router'
 import { Menu as IconMenu, ArrowDown } from '@element-plus/icons-vue'
 import LoginDialog from '@/components/login/indexPage.vue'
-import { $apiUserMsg } from '@/api/index'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useUserMsg } from '@/components/userMsg'
 
 provide('baseUrl', 'http://124.220.34.251:5250')
 
@@ -89,17 +89,18 @@ const menuMap: IPath = {
     '/wishing-well': 'wishingWell',
 }
 const activeName = ref('')
-const username = ref('')
+// const nickName = ref('')
+const { user } = useUserMsg()
 onMounted(async () => {
     activeName.value = menuMap[location.pathname]
-    if (token.value) {
-        getUserMsg()
-    }
+    // if (token.value) {
+    //     getUserMsg()
+    // }
 })
-const getUserMsg = async () => {
-    const res: any = await $apiUserMsg()
-    username.value = res.username
-}
+// const getUserMsg = async () => {
+//     const res: any = await $apiUserMsg()
+//     nickName.value = res.nickName
+// }
 
 const handleSelect = (key: string, keyPath: string[]) => {
     $router.push({ name: key })
@@ -116,7 +117,7 @@ const logOut = () => {
     })
         .then(() => {
             localStorage.removeItem('library_jwt_token')
-            username.value = ''
+            // nickName.value = ''
             token.value = ''
             if (toRaw($route.name) === 'personalSpace') {
                 toPage('homePage')

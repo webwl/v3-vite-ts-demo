@@ -85,8 +85,6 @@ const search = async (init?: string) => {
             total.value = res?.total
             appointmentList.value = res?.list
         }
-
-        console.log(res)
     } catch (error) {
         console.log('获取预约列表失败')
         console.error(error)
