@@ -1,4 +1,4 @@
-import { $get, $post } from '../utils/request'
+import { $get, $post, $put } from '../utils/request'
 
 /**
  * 用户模块
@@ -12,10 +12,14 @@ export const $apiLogin = (params: ILoginForm) => {
 }
 
 // 获取用户信息
-export const $apiUserMsg = () => {
-    return $get('/user')
+export const $apiUserMsg = <T>(): Promise<T> => {
+    return $get<T>('/user')
 }
-
+// 修改用户信息
+import { IUserMsg } from './apiInterface'
+export const $apiUserMsgEdit = <T>(params: IUserMsg): Promise<T> => {
+    return $put<T>('/user', params)
+}
 /**
  * 图书模块
  */
@@ -79,4 +83,13 @@ export const $apiBookEstimate = <T>(params: IBookEstimate): Promise<T> => {
 // 添加书评
 export const $apiBookEstimateSave = <T>(params: IBookEstimateSave): Promise<T> => {
     return $post<T>('/comment/publish', params)
+}
+
+/**
+ * 个人中心
+ */
+import { IPersonalBorrowReq } from './apiInterface'
+// 获取借阅列表
+export const $apiPersonalBorrowList = <T>(params: IPersonalBorrowReq): Promise<T> => {
+    return $get<T>('/borrow/list', params)
 }

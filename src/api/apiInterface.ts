@@ -45,3 +45,17 @@ export interface IBookEstimateSave {
     rate: number
     title: string
 }
+
+// 借阅列表
+export interface IPersonalBorrowReq extends IPage {
+    isReturned: ''
+}
+
+// 用户信息
+export interface IUserMsg {
+    email: string
+    nickName: string
+    password: string
+    prevPassword: string
+    tel: string
+}

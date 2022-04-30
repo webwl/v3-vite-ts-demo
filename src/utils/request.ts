@@ -36,8 +36,8 @@ function request<T>(
         if (method === 'get') {
             data = { params }
         }
-        // post请求使用data字段
-        if (method === 'post') {
+        // post,put请求使用data字段
+        if (['post', 'put'].includes(method)) {
             data = { data: params }
         }
         instance({
@@ -75,4 +75,8 @@ function $get<T>(url: string, params?: any, options?: IOptionForm): Promise<T> {
 function $post<T>(url: string, params?: any, options?: IOptionForm): Promise<T> {
     return request<T>('post', url, params, options)
 }
-export { $get, $post }
+// 封装PUT请求
+function $put<T>(url: string, params?: any, options?: IOptionForm): Promise<T> {
+    return request<T>('put', url, params, options)
+}
+export { $get, $post, $put }

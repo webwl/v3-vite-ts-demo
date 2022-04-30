@@ -1,109 +1,87 @@
 <template>
     <div class="container">
         <div class="data">
-            <p class="name">qwert</p>
+            <p class="name">{{ userMsg.data.nickName }}</p>
             <p class="motto">
-                JavaScript在不断地升级迭代，越来越多的新特性让我们的代码写起来变得简洁有趣，这篇文章会介绍5个新特性，一起研究一下把。
+                <span class="real-msg">姓名：{{ userMsg.data.realName }}</span>
+                <span class="real-msg">班级：{{ userMsg.data.className }}</span>
+                <span class="real-msg">电话：{{ userMsg.data.tel }}</span>
+                <span class="real-msg">邮箱：{{ userMsg.data.email }}</span>
             </p>
-            <p class="domain">2019-计算机科学与技术</p>
-            <el-button class="edit-btn" type="primary" plain>编辑个人资料</el-button>
+            <p class="domain">角色：{{ userMsg.data.role }}</p>
+            <el-button class="edit-btn" type="primary" plain @click="showEdit"
+                >编辑个人资料</el-button
+            >
         </div>
         <div class="tabs">
-            <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-                <el-tab-pane label="我的借阅" name="first">
-                    <div class="content">
-                        <div class="book">
-                            <div class="book-info">
-                                <p class="book-title">《沉默的羔羊》</p>
-                                <p class="author">
-                                    <span class="author-row">作者：托马斯·哈里斯</span>
-                                    <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN": 000001</span>
-                                </p>
-                                <p class="borrow-msg">
-                                    <span class="interval">借阅时间：2022年1月1日</span>
-                                    <span class="interval">约定归还时间：2022年1月1日</span>
-                                    <span class="interval">归还地址: xxxx图书馆</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="book">
-                            <div class="book-info">
-                                <p class="book-title">《沉默的羔羊》</p>
-                                <p class="author">
-                                    <span class="author-row">作者：托马斯·哈里斯</span>
-                                    <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN": 000001</span>
-                                </p>
-                                <p class="borrow-msg">
-                                    <span class="interval">借阅时间：2022年1月1日</span>
-                                    <span class="interval">约定归还时间：2022年1月1日</span>
-                                    <span class="interval">归还地址: xxxx图书馆</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="我的预约" name="third">
-                    <div class="content">
-                        <div class="book">
-                            <div class="book-info">
-                                <p class="book-title">《沉默的羔羊》</p>
-                                <p class="author">
-                                    <span class="author-row">作者：托马斯·哈里斯</span>
-                                    <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN": 000001</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="book">
-                            <div class="book-info">
-                                <p class="book-title">《沉默的羔羊》</p>
-                                <p class="author">
-                                    <span class="author-row">作者：托马斯·哈里斯</span>
-                                    <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN": 000001</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="我的留言" name="three">
-                    <div class="content">
-                        <div class="book">
-                            <div class="book-info">
-                                <p class="book-title">《沉默的羔羊》</p>
-                                <p class="author">
-                                    <span class="author-row">作者：托马斯·哈里斯</span>
-                                    <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN": 000001</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="book">
-                            <div class="book-info">
-                                <p class="book-title">《沉默的羔羊》</p>
-                                <p class="author">
-                                    <span class="author-row">作者：托马斯·哈里斯</span>
-                                    <span class="author-row">出版社：南京</span>
-                                    <span class="author-row">ISBN": 000001</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </el-tab-pane>
+            <el-tabs v-model="activeTab" class="demo-tabs" @tab-click="handleClick">
+                <el-tab-pane label="我的借阅" name="borrowList"> </el-tab-pane>
+                <el-tab-pane label="我的书评" name="estimateList"> </el-tab-pane>
+                <el-tab-pane label="我的留言" name="messageList"> </el-tab-pane>
             </el-tabs>
+            <component :is="acitveComponent[activeTab]"></component>
         </div>
+        <EditDialog ref="editRef" :user-msg="userMsg.data" @refersh="getUserMsg"></EditDialog>
     </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import type { TabsPaneContext } from 'element-plus'
-
-const activeName = ref('first')
-
+import { $apiUserMsg } from '@/api/index'
+import BorrowList from './components/borrowList.vue'
+import EstimateList from './components/estimateList.vue'
+import MessageList from './components/messageList.vue'
+import EditDialog from './components/editMsg.vue'
 const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log(tab, event)
+}
+const activeTab = ref('borrowList')
+const acitveComponent = reactive({
+    borrowList: BorrowList,
+    estimateList: EstimateList,
+    messageList: MessageList,
+})
+onMounted(async () => {
+    getUserMsg()
+})
+interface IUserMsg {
+    className: string
+    email: string
+    id: Number
+    idCard: string
+    nickName: string
+    realName: string
+    role: Number
+    size: Number
+    status: Number
+    tel: string
+    username: string
+}
+interface IUserData {
+    data: IUserMsg
+}
+const userMsg: IUserData = reactive({
+    data: {
+        className: '',
+        email: '',
+        id: 0,
+        idCard: '',
+        nickName: '',
+        realName: '',
+        role: 0,
+        size: 0,
+        status: 0,
+        tel: '',
+        username: '',
+    },
+})
+const getUserMsg = async () => {
+    const res = await $apiUserMsg<IUserMsg>()
+    userMsg.data = res
+}
+const editRef = ref()
+const showEdit = () => {
+    editRef.value.show()
 }
 </script>
 
@@ -129,6 +107,9 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
             color: #72777b;
             max-width: 70%;
             margin-bottom: 20px;
+            .real-msg {
+                margin-right: 20px;
+            }
         }
         .domain {
             font-size: 14px;
