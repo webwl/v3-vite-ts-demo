@@ -35,7 +35,7 @@
     <div class="content">
         <div v-for="item of bookList" :key="item.id" class="book">
             <div class="book-img" @click="toDetail(item.id)">
-                <img class="book-img-src" :src="baseUrl + item.cover" />
+                <img class="book-img-src" :src="item.cover" />
             </div>
             <div class="book-info">
                 <p class="book-title">《{{ item.name }}》</p>
@@ -70,7 +70,6 @@
 import { onMounted, reactive, ref, inject } from 'vue'
 import { $apiBookSearch } from '@/api/index'
 import { useRouter } from 'vue-router'
-const baseUrl = inject('baseUrl')
 
 const formValue = reactive({
     keyword: '',

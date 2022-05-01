@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="detail-block">
-            <div class="book-img"><img :src="baseUrl + bookDetail.data.cover" /></div>
+            <div class="book-img"><img :src="bookDetail.data.cover" /></div>
             <div class="book-msg">
                 <p class="name">《{{ bookDetail.data.name }}》</p>
                 <p class="author">作者：{{ bookDetail.data.author }}</p>
@@ -55,7 +55,6 @@ import { IBookDetail, IBookEstimateSave, IBookEstimateList } from './utils/inter
 import type { Action } from 'element-plus'
 
 const $route = useRoute()
-const baseUrl = inject('baseUrl')
 
 // 登录状态
 // const isLogin = localStorage.getItem('library_jwt_token')

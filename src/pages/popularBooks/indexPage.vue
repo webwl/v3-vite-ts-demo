@@ -18,7 +18,7 @@
                             <p class="intro">{{ item.intro }}</p>
                         </div>
                         <div class="img-block" @click="toDetail(item.id)">
-                            <img class="img" :src="baseUrl + item.cover" />
+                            <img class="img" :src="item.cover" />
                         </div>
                     </div>
                 </el-carousel-item>
@@ -53,7 +53,6 @@ import { $apiHotBookList } from '@/api/index'
 import { IBannerList, IHotReactive } from './utlis/interfaces'
 import { useRouter } from 'vue-router'
 
-const baseUrl = inject('baseUrl')
 const lists: IHotReactive = reactive({
     arr: [
         {

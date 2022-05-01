@@ -58,8 +58,6 @@ import LoginDialog from '@/components/login/indexPage.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserMsg } from '@/components/userMsg'
 
-provide('baseUrl', 'http://124.220.34.251:5250')
-
 const reloadRouter = ref(true)
 const reloadRouterFn = () => {
     reloadRouter.value = false
