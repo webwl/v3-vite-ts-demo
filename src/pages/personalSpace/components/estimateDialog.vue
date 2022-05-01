@@ -37,6 +37,7 @@ const close = () => {
     estimateText.value = ''
     rate.value = 0
 }
+
 const open = () => {
     if (!estimateText.value) {
         ElMessage({
@@ -60,6 +61,7 @@ const open = () => {
                         type: 'success',
                         message: '保存成功',
                     })
+
                     dialogVisible.value = false
                 } catch (error) {
                     console.log('提交书评失败')

@@ -31,7 +31,7 @@ import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import { $apiLogin } from '../../api/index'
 
-const emit = defineEmits(['getUserMsg', 'setToken'])
+const emit = defineEmits(['setToken'])
 
 const ruleForm = reactive({
     username: '',
@@ -67,7 +67,9 @@ const show = () => {
 }
 const close = () => {}
 const submit = async (formEl: any) => {
-    if (!formEl) return
+    if (!formEl) {
+        return
+    }
     await formEl.validate(async (valid: Boolean) => {
         if (valid) {
             try {
@@ -76,7 +78,6 @@ const submit = async (formEl: any) => {
                     localStorage.setItem('library_jwt_token', res)
                     dialogVisible.value = false
                     formEl.resetFields()
-                    emit('getUserMsg')
                     emit('setToken', res)
                 }
             } catch (error) {

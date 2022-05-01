@@ -130,14 +130,17 @@ const show = () => {
 const close = () => {
     ruleFormRef.value.resetFields()
 }
-
+const emit = defineEmits(['setUser'])
 const submit = async (formEl: any) => {
-    if (!formEl) return
+    if (!formEl) {
+        return
+    }
     await formEl.validate(async (valid: Boolean) => {
         if (valid) {
             try {
                 await $apiUserMsgEdit(ruleForm)
                 ElMessage.success('修改成功')
+                emit('setUser')
                 dialogVisible.value = false
             } catch (error) {
                 console.log('编辑失败')

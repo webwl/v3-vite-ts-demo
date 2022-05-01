@@ -21,7 +21,7 @@
             </el-tabs>
             <component :is="currentComponent"></component>
         </div>
-        <EditDialog ref="editRef" :user-msg="user"></EditDialog>
+        <EditDialog ref="editRef" :user-msg="user" @set-user="setUser"></EditDialog>
     </div>
 </template>
 <script lang="ts" setup>
@@ -34,8 +34,10 @@ import MessageList from './components/messageList.vue'
 import EditDialog from './components/editMsg.vue'
 import { useUserMsg } from '@/components/userMsg'
 
-const { user } = useUserMsg()
-
+const { user, getUserMsg } = useUserMsg()
+const setUser = () => {
+    getUserMsg()
+}
 const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log(tab, event)
 }

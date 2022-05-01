@@ -87,18 +87,11 @@ const menuMap: IPath = {
     '/wishing-well': 'wishingWell',
 }
 const activeName = ref('')
-// const nickName = ref('')
-const { user } = useUserMsg()
+const { user, getUserMsg } = useUserMsg()
+
 onMounted(async () => {
     activeName.value = menuMap[location.pathname]
-    // if (token.value) {
-    //     getUserMsg()
-    // }
 })
-// const getUserMsg = async () => {
-//     const res: any = await $apiUserMsg()
-//     nickName.value = res.nickName
-// }
 
 const handleSelect = (key: string, keyPath: string[]) => {
     $router.push({ name: key })
@@ -139,6 +132,7 @@ const toPage = (pathName: string) => {
 }
 const setToken = (val: string) => {
     token.value = val
+    getUserMsg()
     reloadRouterFn()
 }
 </script>

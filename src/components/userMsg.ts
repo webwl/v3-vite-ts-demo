@@ -1,5 +1,5 @@
 // mouse.js
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, nextTick } from 'vue'
 import { $apiUserMsg } from '@/api/index'
 
 interface IUser {
@@ -30,18 +30,21 @@ export function useUserMsg() {
         username: '',
     })
     const getUserMsg = async () => {
+        console.log('更新user')
         const res = await $apiUserMsg<IUser>()
-        user.className = res.className
-        user.email = res.email
-        user.id = res.id
-        user.nickName = res.nickName
-        user.realName = res.realName
-        user.className = res.className
-        user.role = res.role
-        user.size = res.size
-        user.status = res.status
-        user.tel = res.tel
-        user.username = res.username
+        nextTick(() => {
+            user.className = res.className
+            user.email = res.email
+            user.id = res.id
+            user.nickName = res.nickName
+            user.realName = res.realName
+            user.className = res.className
+            user.role = res.role
+            user.size = res.size
+            user.status = res.status
+            user.tel = res.tel
+            user.username = res.username
+        })
     }
     onMounted(() => {
         const localToken = localStorage.getItem('library_jwt_token')
@@ -51,5 +54,6 @@ export function useUserMsg() {
     })
     return {
         user,
+        getUserMsg,
     }
 }
