@@ -139,6 +139,7 @@ const getList = async () => {
 .list-block {
     .list {
         padding: 16px 0;
+        border-bottom: 1px dashed #cdcdcd;
     }
     .list-head {
         overflow: hidden;

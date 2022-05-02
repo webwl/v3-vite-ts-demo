@@ -13,7 +13,7 @@
                 <el-carousel-item v-for="item of bannerList.arr" :key="item.id">
                     <div class="banner">
                         <div class="info-block">
-                            <p class="name">{{ item.name }}</p>
+                            <p class="name">《{{ item.name }}》</p>
                             <p class="author">{{ item.author }}</p>
                             <p class="intro">{{ item.intro }}</p>
                         </div>
@@ -35,7 +35,7 @@
                                     class="list-item"
                                 >
                                     <div class="name" @click="toDetail(listItem.id)">
-                                        {{ listItem.name }}
+                                        《{{ listItem.name }}》
                                     </div>
                                     <div class="author">{{ listItem.author }}</div>
                                 </li>
