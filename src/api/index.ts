@@ -10,6 +10,10 @@ import { ILoginForm } from './apiInterface'
 export const $apiLogin = (params: ILoginForm) => {
     return $post('/auth/login', params)
 }
+// 获取验证码
+export const $apiLoginSecurityCode = () => {
+    return $get('/auth/captcha')
+}
 
 // 获取用户信息
 export const $apiUserMsg = <T>(): Promise<T> => {

@@ -13,6 +13,12 @@
             <el-form-item label="密码" prop="password" placeholder="请输入密码" clearable>
                 <el-input v-model="ruleForm.password" type="password" />
             </el-form-item>
+            <el-form-item label="验证码" prop="captcha" placeholder="请输入验证码" clearable>
+                <div class="captcha">
+                    <el-input v-model="ruleForm.captcha" class="captcha-input" />
+                    <img :src="captchaSrc" class="captcha-icon" @click="getCode" />
+                </div>
+            </el-form-item>
             <el-form-item clearable>
                 <el-checkbox v-model="ruleForm.rememberMe" label="记住密码" size="large" />
             </el-form-item>
@@ -27,15 +33,22 @@
     </el-dialog>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { ElMessage } from 'element-plus'
-import { $apiLogin } from '../../api/index'
+import { $apiLogin, $apiLoginSecurityCode } from '../../api/index'
 
 const emit = defineEmits(['setToken'])
-
+const myTimestamp = ref(new Date().getTime())
+const captchaSrc = computed(() => {
+    return 'http://124.220.34.251:5250/auth/captcha?' + myTimestamp.value
+})
+const getCode = async () => {
+    myTimestamp.value = new Date().getTime()
+}
 const ruleForm = reactive({
     username: '',
     password: '',
+    captcha: null,
     rememberMe: true,
 })
 const ruleFormRef = ref()
@@ -59,13 +72,18 @@ const rules = reactive({
         { required: true, message: '请输入密码', trigger: 'blur' },
         { validator: validatePassword, trigger: 'blur' },
     ],
+    captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
 })
 const dialogVisible = ref(false)
 
 const show = () => {
+    getCode()
     dialogVisible.value = true
 }
-const close = () => {}
+const close = () => {
+    ruleFormRef.value.resetFields()
+}
+
 const submit = async (formEl: any) => {
     if (!formEl) {
         return
@@ -92,3 +110,20 @@ defineExpose({
     close,
 })
 </script>
+<style lang="less" scoped>
+.captcha {
+    overflow: hidden;
+    width: 100%;
+    .captcha-input {
+        width: 80%;
+        float: left;
+    }
+    .captcha-icon {
+        height: 30px;
+        width: calc(20% - 12px);
+        float: left;
+        margin-left: 10px;
+        border: 1px solid;
+    }
+}
+</style>
