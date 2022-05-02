@@ -4,15 +4,23 @@ import { $get, $post, $put } from '../utils/request'
  * 用户模块
  */
 
-import { ILoginForm } from './apiInterface'
+import { ILoginForm, IResetSend, IResetPwd } from './apiInterface'
 
 // 登录
 export const $apiLogin = (params: ILoginForm) => {
     return $post('/auth/login', params)
 }
-// 获取验证码
+// 获取图形验证码
 export const $apiLoginSecurityCode = () => {
     return $get('/auth/captcha')
+}
+// 获取重置验证码
+export const $apiResetSend = (params: IResetSend) => {
+    return $post(`/auth/sendCaptcha?email=${params.email}&username=${params.username}`, params)
+}
+// 修改密码
+export const $apiResetPwd = (params: IResetPwd) => {
+    return $post(`/auth/resetPass`, params)
 }
 
 // 获取用户信息

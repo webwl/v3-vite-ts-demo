@@ -47,7 +47,8 @@
     <div class="content">
         <router-view v-if="reloadRouter"></router-view>
     </div>
-    <LoginDialog ref="loginRef" @set-token="setToken"></LoginDialog>
+    <LoginDialog ref="loginRef" @set-token="setToken" @show-forget="showForget"></LoginDialog>
+    <ForgetDialog ref="forgetRef" @show-login="showLogin"></ForgetDialog>
 </template>
 
 <script lang="ts" setup>
@@ -55,6 +56,7 @@ import { ref, reactive, toRaw, onMounted, computed, provide, nextTick } from 'vu
 import { useRouter, useRoute } from 'vue-router'
 import { Menu as IconMenu, ArrowDown } from '@element-plus/icons-vue'
 import LoginDialog from '@/components/login/indexPage.vue'
+import ForgetDialog from '@/components/forget/indexPage.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserMsg } from '@/components/userMsg'
 
@@ -134,6 +136,14 @@ const setToken = (val: string) => {
     token.value = val
     getUserMsg()
     reloadRouterFn()
+}
+
+const forgetRef = ref()
+const showForget = () => {
+    forgetRef.value.show()
+}
+const showLogin = () => {
+    loginRef.value.show()
 }
 </script>
 

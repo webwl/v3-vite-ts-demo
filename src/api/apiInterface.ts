@@ -8,6 +8,18 @@ export interface ILoginForm {
     password: String
     rememberMe: Boolean
 }
+
+//
+export interface IResetSend {
+    email: string
+    username: string
+}
+export interface IResetPwd {
+    captcha: string
+    password: string
+    username: string
+}
+
 // 查询图书表单
 export interface ISearchForm extends IPage {
     type: String

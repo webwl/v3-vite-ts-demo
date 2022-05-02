@@ -86,7 +86,7 @@ const validateTel = (rule: any, value: any, callback: any) => {
     const Reg = /^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$/
     if (value) {
         if (!Reg.test(value)) {
-            callback(new Error('请正确的手机号'))
+            callback(new Error('请输入正确的手机号'))
         } else {
             callback()
         }
@@ -99,7 +99,7 @@ const validateEmail = (rule: any, value: any, callback: any) => {
         /^[0-9a-zA-Z]+([\.\-_]*[0-9a-zA-Z]+)*@([0-9a-zA-Z]+[\-_]*[0-9a-zA-Z]+\.)+[0-9a-zA-Z]{2,6}$/
     if (value) {
         if (!Reg.test(value)) {
-            callback(new Error('请正确的邮箱'))
+            callback(new Error('请输入正确的邮箱'))
         } else {
             callback()
         }
