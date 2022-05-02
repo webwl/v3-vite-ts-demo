@@ -1,7 +1,7 @@
 <template>
     <el-carousel class="carousel">
         <el-carousel-item v-for="item of bannerList" :key="item">
-            <img class="banner" :src="`../../assets/images/${item}.png`" />
+            <img class="banner" :src="bannerImgList[item]" :alt="item" />
         </el-carousel-item>
     </el-carousel>
     <div class="content">
@@ -142,11 +142,22 @@
 </template>
 <script lang="ts" setup>
 import { Message, Location, PhoneFilled } from '@element-plus/icons-vue'
-import { onMounted, reactive, ref, toRefs, inject } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { $apiBookRecommend } from '@/api/index'
 import { useRouter, useRoute } from 'vue-router'
-
+import banner1 from '@/assets/images/banner1.png'
+import banner2 from '@/assets/images/banner2.png'
+import banner3 from '@/assets/images/banner3.png'
+import banner4 from '@/assets/images/banner4.png'
+import banner5 from '@/assets/images/banner5.png'
 const bannerList = ['banner1', 'banner2', 'banner3', 'banner4', 'banner5']
+const bannerImgList = reactive({
+    banner1,
+    banner2,
+    banner3,
+    banner4,
+    banner5,
+})
 
 onMounted(() => {
     getRecommend()

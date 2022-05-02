@@ -67,16 +67,18 @@ const show = () => {
 const close = () => {
     ruleFormRef.value.resetFields()
 }
-
-const emit = defineEmits(['appointmentList'])
+const emit = defineEmits(['refresh'])
 const submit = async (formEl: any) => {
-    if (!formEl) return
+    if (!formEl) {
+        return
+    }
     await formEl.validate(async (valid: Boolean) => {
         if (valid) {
             ElMessage.success('校验通过！')
             try {
                 const res = await $apiAppointmentAdd(ruleForm)
                 dialogVisible.value = false
+                emit('refresh')
             } catch (error) {
                 console.log('提交预约失败')
                 console.error(error)

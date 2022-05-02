@@ -1,40 +1,4 @@
 <template>
-    <!--
-    <div class="search-bg">
-        <div class="search-block">
-            <el-form class="search-form" :model="formValue" label-width="80px">
-                <el-form-item label="关键字">
-                    <el-input
-                        v-model="formValue.keyword"
-                        placeholder="请输入搜索关键字"
-                        class="keyword"
-                    >
-                        <template #append>
-                            <div class="search-btn" @click="search('init')">搜索</div>
-                        </template>
-                    </el-input>
-                    <el-button type="primary" class="add" @click="showAddDialog">添加</el-button>
-                </el-form-item>
-                <el-form-item label="搜索类型">
-                    <el-radio-group v-model="formValue.field">
-                        <el-radio label="">全部</el-radio>
-                        <el-radio label="name">书名</el-radio>
-                        <el-radio label="author">作者</el-radio>
-                        <el-radio label="isbn">ISBN编号</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="书籍标签">
-                    <el-radio-group v-model="formValue.type">
-                        <el-radio label="">全部</el-radio>
-                        <el-radio :label="1">图书</el-radio>
-                        <el-radio :label="2">教程</el-radio>
-                        <el-radio :label="3">期刊</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-            </el-form>
-        </div>
-    </div>
-    -->
     <div class="content">
         <div class="btn-block">
             <el-button type="primary" @click="showAddDialog">添加预约</el-button>
@@ -58,7 +22,7 @@
             :total="total"
             @current-change="handleCurrentChange"
         />
-        <Add ref="addRef"></Add>
+        <Add ref="addRef" @refresh="search"></Add>
     </div>
 </template>
 <script lang="ts" setup>
