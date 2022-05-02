@@ -26,13 +26,52 @@
         </div>
         <p class="msg-title">全部书评</p>
         <div class="list-block">
-            <div v-for="item of estimateList" :key="item.id" class="list">
+            <div v-for="(item, ind) of estimateList" :key="item.id" class="list">
                 <div class="list-head">
-                    <div class="name">{{ item.userName }}</div>
+                    <div class="name">{{ item.nickName }}</div>
                     <div class="time">{{ item.createTime }}</div>
                 </div>
                 <div class="list-info">
                     {{ item.content }}
+                </div>
+                <div class="like">
+                    <svg
+                        v-show="!item.liked"
+                        style="display: inline-block"
+                        t="1651473232966"
+                        class="icon like-icon"
+                        viewBox="0 0 1024 1024"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        p-id="1282"
+                        width="20"
+                        height="20"
+                        @click="like(Number(item.id), ind)"
+                    >
+                        <path
+                            d="M832 364.8h-147.2s19.2-64 32-179.2c6.4-57.6-38.4-115.2-102.4-121.6h-12.8c-51.2 0-83.2 32-102.4 76.8l-38.4 96c-32 64-57.6 102.4-76.8 115.2-25.6 12.8-121.6 12.8-128 12.8H128c-38.4 0-64 25.6-64 57.6v480c0 32 25.6 57.6 64 57.6h646.4c96 0 121.6-64 134.4-153.6l51.2-307.2c6.4-70.4-6.4-134.4-128-134.4z m-576 537.6H128V422.4h128v480z m640-409.6l-51.2 307.2c-12.8 57.6-12.8 102.4-76.8 102.4H320V422.4c44.8 0 70.4-6.4 89.6-19.2 32-12.8 64-64 108.8-147.2 25.6-64 38.4-96 44.8-102.4 6.4-19.2 19.2-32 44.8-32h6.4c32 0 44.8 32 44.8 51.2-12.8 102.4-32 166.4-32 166.4l-25.6 83.2h243.2c19.2 0 32 0 44.8 12.8 12.8 12.8 6.4 38.4 6.4 57.6z"
+                            p-id="1283"
+                            fill="#283857"
+                        ></path>
+                    </svg>
+                    <svg
+                        v-show="item.liked"
+                        t="1651473707347"
+                        class="icon like-icon"
+                        viewBox="0 0 1024 1024"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        p-id="1612"
+                        width="20"
+                        height="20"
+                    >
+                        <path
+                            d="M832 364.8h-147.2s19.2-64 32-179.2c6.4-57.6-38.4-115.2-102.4-121.6h-12.8c-51.2 0-83.2 32-102.4 76.8l-38.4 96c-32 64-57.6 102.4-76.8 115.2-25.6 12.8-121.6 12.8-128 12.8H128c-38.4 0-64 25.6-64 57.6v480c0 32 25.6 57.6 64 57.6h646.4c96 0 121.6-64 134.4-153.6l51.2-307.2c6.4-70.4-6.4-134.4-128-134.4z m-576 537.6H128V422.4h128v480z m640-409.6l-51.2 307.2c-12.8 57.6-12.8 102.4-76.8 102.4H320V422.4c44.8 0 70.4-6.4 89.6-19.2 32-12.8 64-64 108.8-147.2 25.6-64 38.4-96 44.8-102.4 6.4-19.2 19.2-32 44.8-32h6.4c32 0 44.8 32 44.8 51.2-12.8 102.4-32 166.4-32 166.4l-25.6 83.2h243.2c19.2 0 32 0 44.8 12.8 12.8 12.8 6.4 38.4 6.4 57.6z"
+                            p-id="1613"
+                            fill="#1296db"
+                        ></path>
+                    </svg>
+                    <span class="like-num">{{ item.likeNum }}</span>
                 </div>
             </div>
             <el-pagination
@@ -49,7 +88,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed, toRaw, inject } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { $apiBookDetail, $apiBookEstimate, $apiBookEstimateSave } from '@/api/index'
+import { $apiBookDetail, $apiBookEstimate, $apiBookEstimateLike } from '@/api/index'
 import { useRoute } from 'vue-router'
 import { IBookDetail, IBookEstimateSave, IBookEstimateList } from './utils/interfaces'
 import type { Action } from 'element-plus'
@@ -112,6 +151,18 @@ const getList = async () => {
         }
     } catch (error) {
         console.log('获取书评列表失败')
+        console.error(error)
+    }
+}
+
+const like = async (id: number, ind: number) => {
+    try {
+        const res = await $apiBookEstimateLike(id)
+        estimateList.value[ind].likeNum += 1
+        estimateList.value[ind].liked = true
+        console.log(res)
+    } catch (error) {
+        console.log('点赞失败')
         console.error(error)
     }
 }
@@ -209,6 +260,18 @@ const getList = async () => {
     color: #252933;
 }
 .list-block {
+    .like {
+        overflow: hidden;
+        .like-icon {
+            float: left;
+            cursor: pointer;
+        }
+        .like-num {
+            float: left;
+            margin-top: 2px;
+            margin-left: 5px;
+        }
+    }
     .list {
         padding: 16px 0;
     }
@@ -236,7 +299,7 @@ const getList = async () => {
         font-weight: 400;
         font-size: 14px;
         line-height: 2rem;
-        color: #515767;
+        color: #8a8a8a;
         margin-top: 8px;
         margin-bottom: 8px;
     }

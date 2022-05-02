@@ -11,14 +11,27 @@
                 <p class="borrow-msg">
                     <span class="interval">借阅时间：{{ item.createTime }}</span>
                     <span class="interval">约定归还时间：{{ item.endTime }}</span>
+                    <span class="interval"
+                        >借阅状态：{{
+                            item.retStatus
+                                ? '已归还'
+                                : item.late
+                                ? item.postponed
+                                    ? '已申请延期'
+                                    : '已逾期'
+                                : '借阅中'
+                        }}</span
+                    >
                 </p>
             </div>
-            <el-button
-                type="primary"
-                class="estimate-btn"
-                @click="showEstimateDialog(Number(item.id))"
-                >评价</el-button
-            >
+            <div class="status-block">
+                <el-button
+                    v-show="item.retStatus"
+                    type="primary"
+                    @click="showEstimateDialog(Number(item.id))"
+                    >评价</el-button
+                >
+            </div>
         </div>
         <el-pagination
             v-model:currentPage="currentPage"
@@ -84,7 +97,7 @@ const handleCurrentChange = () => {
         margin-bottom: 10px;
         overflow: hidden;
         position: relative;
-        .estimate-btn {
+        .status-block {
             position: absolute;
             right: 0;
             top: 35%;

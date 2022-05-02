@@ -82,6 +82,10 @@ export const $apiBookEstimate = <T>(params: IBookEstimate): Promise<T> => {
 export const $apiBookEstimateSave = <T>(params: IBookEstimateSave): Promise<T> => {
     return $post<T>('/comment/publish', params)
 }
+// 点赞书评
+export const $apiBookEstimateLike = <T>(id: number): Promise<T> => {
+    return $post<T>(`/comment/like?id=${id}`)
+}
 
 /**
  * 个人中心
