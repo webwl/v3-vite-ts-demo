@@ -1,8 +1,10 @@
 <template>
     <el-carousel class="carousel">
-        <el-carousel-item v-for="item of bannerList" :key="item">
-            <img class="banner" :src="bannerImgList[item]" :alt="item" />
-        </el-carousel-item>
+        <el-carousel-item> <img class="banner" :src="banner1" /> </el-carousel-item>
+        <el-carousel-item> <img class="banner" :src="banner2" /> </el-carousel-item>
+        <el-carousel-item> <img class="banner" :src="banner3" /> </el-carousel-item>
+        <el-carousel-item> <img class="banner" :src="banner4" /> </el-carousel-item>
+        <el-carousel-item> <img class="banner" :src="banner5" /> </el-carousel-item>
     </el-carousel>
     <div class="content">
         <div class="block-title">图书推荐</div>
@@ -150,14 +152,6 @@ import banner2 from '@/assets/images/banner2.png'
 import banner3 from '@/assets/images/banner3.png'
 import banner4 from '@/assets/images/banner4.png'
 import banner5 from '@/assets/images/banner5.png'
-const bannerList = ['banner1', 'banner2', 'banner3', 'banner4', 'banner5']
-const bannerImgList = reactive({
-    banner1,
-    banner2,
-    banner3,
-    banner4,
-    banner5,
-})
 
 onMounted(() => {
     getRecommend()
