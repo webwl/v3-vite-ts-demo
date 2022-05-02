@@ -31,9 +31,11 @@
                     <div class="name">{{ item.nickName }}</div>
                     <div class="time">{{ item.createTime }}</div>
                 </div>
+                <el-rate v-model="item.rate" disabled />
                 <div class="list-info">
                     {{ item.content }}
                 </div>
+
                 <div class="like">
                     <svg
                         v-show="!item.liked"
@@ -156,11 +158,15 @@ const getList = async () => {
 }
 
 const like = async (id: number, ind: number) => {
+    const token = localStorage.getItem('library_jwt_token')
+    if (!token) {
+        ElMessage.warning('请先登录再操作')
+        return
+    }
     try {
         const res = await $apiBookEstimateLike(id)
         estimateList.value[ind].likeNum += 1
         estimateList.value[ind].liked = true
-        console.log(res)
     } catch (error) {
         console.log('点赞失败')
         console.error(error)
@@ -184,7 +190,7 @@ const like = async (id: number, ind: number) => {
         margin-bottom: 10px;
     }
     .write-block {
-        /deep/.el-textarea__inner {
+        :deep(.el-textarea__inner) {
             resize: none;
         }
         margin-bottom: 10px;

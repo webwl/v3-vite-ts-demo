@@ -1,7 +1,7 @@
 <template>
     <el-carousel class="carousel">
         <el-carousel-item v-for="item of bannerList" :key="item">
-            <img class="banner" :src="'/src/assets/images/' + item + '.png'" />
+            <img class="banner" :src="`../../assets/images/${item}.png`" />
         </el-carousel-item>
     </el-carousel>
     <div class="content">

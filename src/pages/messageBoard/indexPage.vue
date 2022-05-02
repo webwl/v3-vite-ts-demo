@@ -120,7 +120,7 @@ const getList = async () => {
 }
 
 .write-block {
-    /deep/.el-textarea__inner {
+    :deep(.el-textarea__inner) {
         resize: none;
     }
 }
