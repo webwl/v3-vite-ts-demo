@@ -1,4 +1,5 @@
 <template>
+    <!--
     <div class="search-bg">
         <div class="search-block">
             <el-form class="search-form" :model="formValue" label-width="80px">
@@ -33,7 +34,11 @@
             </el-form>
         </div>
     </div>
+    -->
     <div class="content">
+        <div class="btn-block">
+            <el-button type="primary" @click="showAddDialog">添加预约</el-button>
+        </div>
         <div v-for="item of appointmentList" :key="item.id" class="book">
             <div class="book-info">
                 <p class="book-title">《{{ item.name }}》</p>
@@ -130,9 +135,13 @@ const showAddDialog = () => {
         margin-left: 10px;
     }
 }
+.btn-block {
+    margin-bottom: 20px;
+    text-align: right;
+}
 .content {
     width: 70vw;
-    margin: 0 auto 60px;
+    margin: 20px auto 60px;
     padding: 20px 0;
     overflow: hidden;
     background-color: #fff;

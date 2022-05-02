@@ -4,7 +4,7 @@
         <el-input
             v-model="myMsg"
             :disabled="!isLogin"
-            :placeholder="isLogin ? '请输入留言' : '请登陆后再开始留言'"
+            :placeholder="isLogin ? '请输入留言' : '请登录后再开始留言'"
             class="write-block"
             :rows="5"
             maxlength="500"
