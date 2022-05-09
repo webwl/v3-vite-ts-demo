@@ -42,7 +42,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, reactive, computed } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, imageProps } from 'element-plus'
 import { $apiLogin, $apiLoginSecurityCode } from '../../api/index'
 
 const emit = defineEmits(['setToken', 'showForget'])
@@ -86,6 +86,8 @@ const dialogVisible = ref(false)
 
 const show = () => {
     getCode()
+    // 单独执行一次验证码请求，获取登录所需token
+    $apiLoginSecurityCode()
     dialogVisible.value = true
 }
 const close = () => {

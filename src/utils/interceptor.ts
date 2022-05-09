@@ -20,15 +20,23 @@ const service = axios.create({
     timeout: 10000,
     // 如果用的JSONP，可以配置此参数带上cookie凭证，如果是代理和CORS不用设置
     withCredentials: false,
+    // responseType:
 })
 // 请求拦截
 service.interceptors.request.use((config) => {
     // 自定义header，可添加项目token
     const TOKEN = localStorage.getItem('library_jwt_token')
+    const LOGIN_TOKEN = sessionStorage.getItem('library_login_token') || ''
     if (TOKEN) {
         config.headers = {
             ...config.headers,
             Authorization: TOKEN,
+        }
+    }
+    if (config.url === '/auth/login') {
+        config.headers = {
+            ...config.headers,
+            ACCESS_TOKEN: LOGIN_TOKEN,
         }
     }
     return config
@@ -36,10 +44,14 @@ service.interceptors.request.use((config) => {
 // 返回拦截
 service.interceptors.response.use(
     (response) => {
+        // 如果响应头中有access_token就保留下来，给登录接口用
+        if (response?.headers?.access_token) {
+            sessionStorage.setItem('library_login_token', response.headers.access_token)
+        }
         // 获取接口返回结果
         const res = response.data
-        // code为200，直接把结果返回回去，这样前端代码就不用在获取一次data.
-        if (res.code === 200) {
+        // code为200，直接把结果返回回去，这样前端代码就不用在获取一次data
+        if (res.code === 200 || (res && !res.code)) {
             return res
         }
         ElMessage.error(res.msg || res.error)
