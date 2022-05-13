@@ -244,10 +244,10 @@ const toDetail = (bookId: string | number) => {
                 background-color: #fff;
                 box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
                 .img {
-                    width: 70%;
-                    height: 80%;
+                    width: 40%;
+                    height: 70%;
                     float: left;
-                    margin-left: 15%;
+                    margin-left: 30%;
                     margin-top: 10%;
                     cursor: pointer;
                 }
@@ -287,8 +287,8 @@ const toDetail = (bookId: string | number) => {
                     width: 50%;
                     height: 100%;
                     .img {
-                        width: 85%;
-                        height: 50%;
+                        width: 70%;
+                        height: 70%;
                         float: left;
                         margin-top: 35%;
                         cursor: pointer;

@@ -7,6 +7,8 @@ export interface ILoginForm {
     username: String
     password: String
     rememberMe: Boolean
+    captcha: String
+    captchaId: String
 }
 
 //

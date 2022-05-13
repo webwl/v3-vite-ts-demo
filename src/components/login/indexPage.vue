@@ -16,7 +16,11 @@
             <el-form-item label="验证码" prop="captcha" placeholder="请输入验证码" clearable>
                 <div class="captcha">
                     <el-input v-model="ruleForm.captcha" class="captcha-input" />
-                    <img :src="captchaSrc" class="captcha-icon" @click="getCode" />
+                    <img
+                        :src="`data:image/png;base64,${captchaSrc}`"
+                        class="captcha-icon"
+                        @click="getCode"
+                    />
                 </div>
             </el-form-item>
             <el-form-item clearable>
@@ -47,16 +51,27 @@ import { $apiLogin, $apiLoginSecurityCode } from '../../api/index'
 
 const emit = defineEmits(['setToken', 'showForget'])
 const myTimestamp = ref(new Date().getTime())
-const captchaSrc = computed(() => {
-    return 'http://124.220.34.251:5250/auth/captcha?' + myTimestamp.value
-})
+const captchaSrc = ref('')
+const captchaId = ref('')
 const getCode = async () => {
-    myTimestamp.value = new Date().getTime()
+    interface Ires {
+        img: string
+        id: string
+    }
+    try {
+        const res = await $apiLoginSecurityCode<Ires>()
+        captchaSrc.value = res.img
+        captchaId.value = res.id
+        sessionStorage.setItem('library_login_token', res.id)
+    } catch (error) {
+        console.log('获取验证码失败')
+        console.log(error)
+    }
 }
 const ruleForm = reactive({
     username: '',
     password: '',
-    captcha: null,
+    captcha: '',
     rememberMe: true,
 })
 const ruleFormRef = ref()
@@ -86,8 +101,7 @@ const dialogVisible = ref(false)
 
 const show = () => {
     getCode()
-    // 单独执行一次验证码请求，获取登录所需token
-    $apiLoginSecurityCode()
+
     dialogVisible.value = true
 }
 const close = () => {
@@ -104,7 +118,10 @@ const submit = async (formEl: any) => {
     await formEl.validate(async (valid: Boolean) => {
         if (valid) {
             try {
-                const res = await $apiLogin(ruleForm)
+                const res = await $apiLogin({
+                    ...ruleForm,
+                    captchaId: captchaId.value,
+                })
                 if (res && typeof res === 'string') {
                     localStorage.setItem('library_jwt_token', res)
                     dialogVisible.value = false

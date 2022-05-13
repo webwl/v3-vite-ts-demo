@@ -26,17 +26,10 @@ const service = axios.create({
 service.interceptors.request.use((config) => {
     // 自定义header，可添加项目token
     const TOKEN = localStorage.getItem('library_jwt_token')
-    const LOGIN_TOKEN = sessionStorage.getItem('library_login_token') || ''
     if (TOKEN) {
         config.headers = {
             ...config.headers,
             Authorization: TOKEN,
-        }
-    }
-    if (config.url === '/auth/login') {
-        config.headers = {
-            ...config.headers,
-            ACCESS_TOKEN: LOGIN_TOKEN,
         }
     }
     return config
@@ -44,10 +37,6 @@ service.interceptors.request.use((config) => {
 // 返回拦截
 service.interceptors.response.use(
     (response) => {
-        // 如果响应头中有access_token就保留下来，给登录接口用
-        if (response?.headers?.access_token) {
-            sessionStorage.setItem('library_login_token', response.headers.access_token)
-        }
         // 获取接口返回结果
         const res = response.data
         // code为200，直接把结果返回回去，这样前端代码就不用在获取一次data

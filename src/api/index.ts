@@ -11,8 +11,8 @@ export const $apiLogin = (params: ILoginForm) => {
     return $post('/auth/login', params)
 }
 // 获取图形验证码
-export const $apiLoginSecurityCode = () => {
-    return $get('/auth/captcha')
+export const $apiLoginSecurityCode = <T>(): Promise<T> => {
+    return $get<T>('/auth/captcha')
 }
 // 获取重置验证码
 export const $apiResetSend = (params: IResetSend) => {
