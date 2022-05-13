@@ -8,7 +8,7 @@
                 <span class="real-msg">电话：{{ user.tel }}</span>
                 <span class="real-msg">邮箱：{{ user.email }}</span>
             </p>
-            <p class="domain">角色：{{ user.role }}</p>
+            <p class="domain">角色：{{ role[user.role] }}</p>
             <el-button class="edit-btn" type="primary" plain @click="showEdit"
                 >编辑个人资料</el-button
             >
@@ -38,6 +38,12 @@ const { user, getUserMsg } = useUserMsg()
 const setUser = () => {
     getUserMsg()
 }
+
+const role = {
+    0: '学生',
+    1: '教师',
+}
+
 const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log(tab, event)
 }
