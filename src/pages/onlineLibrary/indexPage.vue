@@ -25,8 +25,8 @@
                     <el-radio-group v-model="formValue.type">
                         <el-radio label="">全部</el-radio>
                         <el-radio :label="1">图书</el-radio>
-                        <el-radio :label="2">教程</el-radio>
-                        <el-radio :label="3">期刊</el-radio>
+                        <el-radio :label="3">教程</el-radio>
+                        <el-radio :label="2">期刊</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>

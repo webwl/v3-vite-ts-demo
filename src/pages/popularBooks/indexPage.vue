@@ -4,7 +4,7 @@
             热<span class="placeholder"></span>读<span class="placeholder"></span>榜
         </p>
         <p class="subhead">
-            Mast<span class="placeholder"></span>Read<span class="placeholder"></span>Articles
+            Must<span class="placeholder"></span>Read<span class="placeholder"></span>Articles
         </p>
     </div>
     <div class="content-bg">
