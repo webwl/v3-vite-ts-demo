@@ -172,6 +172,10 @@ const toDetail = (bookId: string | number) => {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 10;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 7;
+            -webkit-box-orient: vertica;
         }
     }
     .img-block {

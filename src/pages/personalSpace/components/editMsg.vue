@@ -76,6 +76,8 @@ const validateNewPassword = (rule: any, value: any, callback: any) => {
     const Reg = /^[A-Za-z0-9]{4,20}$/
     if (value === '') {
         callback()
+    } else if (value && !ruleForm.password) {
+        callback(new Error('请先输入旧密码'))
     } else if (!Reg.test(value)) {
         callback(new Error('请输入4-20位以内的密码'))
     } else {
@@ -111,7 +113,7 @@ const rules = reactive({
     nickName: [{ min: 1, max: 20, message: '请输入1-20位以内的昵称', trigger: 'blur' }],
     password: [{ validator: validateNewPassword, trigger: 'blur' }],
     prevPassword: [
-        { required: true, message: '请输入旧密码', trigger: 'blur' },
+        { message: '请输入旧密码', trigger: 'blur' },
         { validator: validateOldPassword, trigger: 'blur' },
     ],
     tel: [{ validator: validateTel, trigger: 'blur' }],
