@@ -20,7 +20,7 @@
         <div class="list-block">
             <div v-for="item of messageList" :key="item.id" class="list">
                 <div class="list-head">
-                    <div class="name">{{ item.userName }}</div>
+                    <div class="name">{{ item.nickName }}</div>
                     <div class="time">{{ item.createTime }}</div>
                 </div>
                 <div class="list-info">
