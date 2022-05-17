@@ -22,6 +22,9 @@
                                 : '借阅中'
                         }}</span
                     >
+                    <span v-if="item.retCondition" class="interval"
+                        >归还状态：{{ retConditionList[item.retCondition] }}</span
+                    >
                 </p>
             </div>
             <div class="status-block">
@@ -52,6 +55,15 @@ import EstimateDialog from './estimateDialog.vue'
 onMounted(() => {
     getList()
 })
+
+const retConditionList = reactive({
+    1: '正常',
+    2: '轻微折旧',
+    3: '轻微损坏',
+    4: '严重损坏',
+    5: '丢失',
+})
+
 const dialogRef = ref()
 const borrowId = ref('')
 const showEstimateDialog = (id: Number) => {

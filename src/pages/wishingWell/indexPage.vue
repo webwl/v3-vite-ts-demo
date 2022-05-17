@@ -29,7 +29,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import Add from './components/add.vue'
 import { $apiAppointmentList } from '@/api/index'
-
+import { ElMessage } from 'element-plus'
 const formValue = reactive({
     keyword: '',
     type: '',
@@ -70,7 +70,12 @@ const handleCurrentChange = (val: number) => {
 
 const addRef = ref()
 const showAddDialog = () => {
-    addRef.value?.show()
+    const loginToken = localStorage.getItem('library_jwt_token')
+    if (loginToken) {
+        addRef.value?.show()
+    } else {
+        ElMessage.warning('请先登录再预约')
+    }
 }
 </script>
 

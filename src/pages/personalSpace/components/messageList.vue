@@ -8,6 +8,15 @@
             <div class="list-info">
                 {{ item.content }}
             </div>
+            <div v-if="item.reply" class="reply">
+                <div class="list-head">
+                    <div class="name">{{ item.replyBy }}</div>
+                    <div class="time">{{ item.replyTime }}</div>
+                </div>
+                <div class="list-info">
+                    {{ item.reply }}
+                </div>
+            </div>
         </div>
         <el-pagination
             v-model:currentPage="currentPage"
@@ -116,6 +125,11 @@ const handleCurrentChange = () => {
         color: #515767;
         margin-top: 8px;
         margin-bottom: 8px;
+    }
+    .reply {
+        border-radius: 7px;
+        padding: 5px 10px;
+        background-color: #f9fafb;
     }
 }
 </style>
