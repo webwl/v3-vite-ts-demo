@@ -45,8 +45,11 @@
                     <span class="author-row">出版社：{{ item.publish }}</span>
                     <span class="author-row">ISBN编号：{{ item.isbn }}</span>
                     <span class="author-row">出版日期：{{ item.publishTime }}</span>
+                    <span v-show="item.translate" class="author-row"
+                        >译者：{{ item.translate }}</span
+                    >
                 </p>
-                <p class="series">丛书名称：{{ item.translate }}</p>
+                <!-- <p class="series">丛书名：{{ item.translate }}</p> -->
                 <p class="intro" :title="item.intro">简介：{{ item.intro }}</p>
                 <div class="inventory">
                     <div class="inventory-item">借出（本）：{{ item.borrowedNum }}</div>
